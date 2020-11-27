@@ -7,8 +7,14 @@ import java.net.Socket;
 public class Client {
 
     Socket socket;
+    Player player;
+    int port;
+    String IPaddr;
 
-    public Client (int port, int player, String IPaddr){
+    public Client (int port, String IPaddr){
+        this.port = port;
+       // this.player = player;
+        this.IPaddr = IPaddr;
 
         System.out.print("client has: " + port + " " + player + " " + IPaddr);
 
@@ -16,6 +22,10 @@ public class Client {
 
         try {
             socket = new Socket(IPaddr, port);
+            String message = player + " " + IPaddr;
+            DataOutputStream outToServer = new DataOutputStream(socket.getOutputStream());
+            outToServer.writeUTF(message);
+            outToServer.writeUTF("eof");
         } catch (IOException e) {
             System.err.println("Could not listen on port: " + port);
             System.exit(-1);

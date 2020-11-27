@@ -28,7 +28,7 @@ public class StateOfTheGame {
      *****************************************************************/
     public StateOfTheGame (ChessModel model) {
         state = new ArrayList<>();
-        beginningModel = new ChessModel();
+        beginningModel = new ChessModel(model.currentPlayer());
         for (int row = 0; row < 8; row++) {
             for (int col = 0; col < 8; col++) {
                 IChessPiece piece = model.pieceAt(row,col);
@@ -50,7 +50,7 @@ public class StateOfTheGame {
                 state.remove(0);
             }
         }
-        ChessModel oldModel = new ChessModel();
+        ChessModel oldModel = new ChessModel(model.currentPlayer());
         for (int row = 0; row < 8; row++) {
             for (int col = 0; col < 8; col++) {
                 IChessPiece piece = model.pieceAt(row,col);

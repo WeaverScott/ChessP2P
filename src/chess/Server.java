@@ -1,24 +1,45 @@
 package chess;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.StringTokenizer;
 
 public class Server {
 
     Socket socket;
     ChessModel model;
+    String clientIP;
+    Player player;
 
-    public Server (int port, ChessModel model,  int player){
-        System.out.print("server has: " + port + " " + player);
+    public Server (int port, ChessModel model){
+        System.out.print("server has: " + port);
 
         this.model = model;
 
         try {
             ServerSocket server = new ServerSocket(port);
             socket = server.accept();
+            DataInputStream clientInput = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
+            while (true){
+                String message = clientInput.readUTF();
+                if (message.equals("eof")) {
+                    break;
+                }
+
+                StringTokenizer tokens = new StringTokenizer(message);
+                String player = tokens.nextToken();
+
+                if (player.equals("BLACK")){
+                    player = Player.BLACK.toString();
+                }else{
+                    player = Player.WHITE.toString();
+                }
+
+                clientIP = tokens.nextToken();
+
+
+            }
 
 
 
@@ -57,5 +78,14 @@ public class Server {
         }
 
     }
+
+
+    public String getClientIP(){
+        return clientIP;
+    }
+
+   public Player getPlayer(){
+        return player;
+   }
 
 }

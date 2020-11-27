@@ -72,9 +72,9 @@ public class ChessPanel extends JPanel {
     private boolean AIisActive = false;
 
     private String otherPlayerIP;
-    private int otherPlayerPort;
-    private int thisPort;
+    private int port;
     //TODO var for keeping track of current player color
+    private Player player;
 
     private Server server;
     private Client client;
@@ -83,19 +83,50 @@ public class ChessPanel extends JPanel {
      * A constructor that sets up the panel.
      *****************************************************************/
     public ChessPanel() {
-        model = new ChessModel();
+
+
+
+        if(this.askStartNewGame()){
+            System.out.println("new game");
+            port = this.askForPort();
+            System.out.println(port);
+            player = this.askForColor();
+            System.out.println(player);
+
+            model = new ChessModel(player);
+            server = new Server(port, model);
+
+
+            //server tells client ip of joining
+            client = new Client(port, server.getClientIP());
+
+
+        }else{
+            System.out.println("join existing");
+            otherPlayerIP = this.askForJoiningIP();
+            System.out.println(otherPlayerIP);
+            port = this.askForPort();
+            System.out.println(port);
+
+//            player = this.askForColor();
+//            System.out.println(player);
+
+
+            client = new Client(port, otherPlayerIP);
+
+            server = new Server(port, model);
+        }
+
+
+        //int player = 1;
+
+        model = new ChessModel(player);
         board = new JButton[model.numRows()][model.numColumns()];
         listener = new listener();
         createIcons();
 
-        //TODO: create dialog asking to either start a new game or join a existing one
-        //TODO: create a second dialog for if the user chooses to start a new game to decide the color they will be playing and the port number
-        //TODO: create a dialog for when the user chooses to join an existing game to specify the IP and port num of the game they are joining
 
-        int player = 1;
-
-        server = new Server(thisPort, model, player);
-        client = new Client(otherPlayerPort, player, otherPlayerIP);
+        //client = new Client(otherPlayerPort, player, otherPlayerIP);
 
 
        // this.askForAI();
@@ -318,6 +349,58 @@ public class ChessPanel extends JPanel {
             AIisActive = false;
         }
     }
+
+    private boolean askStartNewGame(){
+
+        //strings in this array correspond to the text of the buttons
+        Object[] buttons = {"Start New Game", "Join Existing Game"};
+
+        // this is the overloaded constructor of the JOptionPane,
+        // for custom buttons
+        int result = JOptionPane.showOptionDialog(null,
+                "Start or join game?", null,
+                JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE,
+                null, buttons, buttons[0]);
+
+        if (result == JOptionPane.YES_OPTION){
+             return true;
+        }else{
+            return false;
+        }
+
+    }
+
+    private String askForJoiningIP(){
+
+       return JOptionPane.showInputDialog("Enter the IP address of the game");
+
+    }
+
+    private int askForPort(){
+        return Integer.parseInt(JOptionPane.showInputDialog("Enter the port number of the game"));
+    }
+
+    private Player askForColor(){
+        //strings in this array correspond to the text of the buttons
+        // first is yes option second is no
+        Object[] buttons = {"Black", "White"};
+
+        // this is the overloaded constructor of the JOptionPane,
+        // for custom buttons
+        int result = JOptionPane.showOptionDialog(null,
+                "What color do you want to play?", null,
+                JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE,
+                null, buttons, buttons[0]);
+
+        if (result == JOptionPane.YES_OPTION){
+            return Player.BLACK;
+
+        }else{
+            return Player.WHITE;
+        }
+    }
+
+
 
 
     // inner class that represents action listener for buttons
