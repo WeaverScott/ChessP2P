@@ -174,20 +174,20 @@ public class ChessPanel extends JPanel {
      ******************************************************************/
     private void createIcons() {
         // Sets the ImageIcon for white player pieces
-        wRook = new ImageIcon("./src/Chess/wRook.png");
-        wBishop = new ImageIcon("./src/Chess/wBishop.png");
-        wQueen = new ImageIcon("./src/Chess/wQueen.png");
-        wKing = new ImageIcon("./src/Chess/wKing.png");
-        wPawn = new ImageIcon("./src/Chess/wPawn.png");
-        wKnight = new ImageIcon("./src/Chess/wKnight.png");
+        wRook = new ImageIcon("./Chess/src/Chess/wRook.png");
+        wBishop = new ImageIcon("./Chess/src/Chess/wBishop.png");
+        wQueen = new ImageIcon("./Chess/src/Chess/wQueen.png");
+        wKing = new ImageIcon("./Chess/src/Chess/wKing.png");
+        wPawn = new ImageIcon("./Chess/src/Chess/wPawn.png");
+        wKnight = new ImageIcon("./Chess/src/Chess/wKnight.png");
 
         // sets the ImageIcon for black player pieces
-        bRook = new ImageIcon("./src/Chess/bRook.png");
-        bBishop = new ImageIcon("./src/Chess/bBishop.png");
-        bQueen = new ImageIcon("./src/Chess/bQueen.png");
-        bKing = new ImageIcon("./src/Chess/bKing.png");
-        bPawn = new ImageIcon("./src/Chess/bPawn.png");
-        bKnight = new ImageIcon("./src/Chess/bKnight.png");
+        bRook = new ImageIcon("./Chess/src/Chess/bRook.png");
+        bBishop = new ImageIcon("./Chess/src/Chess/bBishop.png");
+        bQueen = new ImageIcon("./Chess/src/Chess/bQueen.png");
+        bKing = new ImageIcon("./Chess/src/Chess/bKing.png");
+        bPawn = new ImageIcon("./Chess/src/Chess/bPawn.png");
+        bKnight = new ImageIcon("./Chess/src/Chess/bKnight.png");
     }
 
     /******************************************************************
@@ -310,7 +310,6 @@ public class ChessPanel extends JPanel {
                             firstTurnFlag = true;   // set firstTurnFlag to true
                             setBackGroundColor(fromRow, fromCol);   // change space's background color back to what it was before first click
                             Move m = new Move(fromRow, fromCol, toRow, toCol);  // instantiate new move
-
                             // m is a valid move and piece at from belongs to the current player
                             if (model.isValidMove(m) && model.pieceAt(fromRow, fromCol).player() == model.currentPlayer()) {
                                 undoMoves.add(new Move(toRow, toCol, fromRow, fromCol));    // add m to the undoMoves ArrayList
