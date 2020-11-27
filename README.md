@@ -1,1 +1,9 @@
 # ChessP2P
+
+Lauren: alright so the basic structure i thought we could do is have one client and one server class for each player. the server only listens for info while the client can only send it. we send a 4 character string to represent the moves, the first character is the row of the piece you are trying to move, the second character its column. the other two characters is the row column you are moving the piece to. this way we can just use the same method as the FTP server project. 
+
+as far as getting the client/server to communicate with the prexisting chess game, i thought Chesspanel could instantiate the client and server, sending the instance of ChessModel to the server in the constructor. ChessPanel would communicate the local user's moves to the client class with a method.
+
+we need some way of communicating the color each player wants to play while opening the game, as well as port and ip address within the GUI or the command line. 
+
+let me know if you think another method of implementing this would be better
