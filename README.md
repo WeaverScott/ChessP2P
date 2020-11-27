@@ -9,5 +9,7 @@ let me know if you think another method of implementing this would be better
 
 TODO:
 a way to pause the chess game and resume later
+
 finish code for communicating moves between the two players
+
 finish code for starting the connection between the two players
