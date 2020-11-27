@@ -9,9 +9,12 @@ import java.net.Socket;
 public class Server {
 
     Socket socket;
+    ChessModel model;
 
-    public Server (int port, int player){
+    public Server (int port, ChessModel model,  int player){
         System.out.print("server has: " + port + " " + player);
+
+        this.model = model;
 
         try {
             ServerSocket server = new ServerSocket(port);

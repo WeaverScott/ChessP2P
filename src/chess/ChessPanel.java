@@ -69,7 +69,15 @@ public class ChessPanel extends JPanel {
     /** The listener for the action listeners */
     private listener listener;
 
-    private boolean AIisActive;
+    private boolean AIisActive = false;
+
+    private String otherPlayerIP;
+    private int otherPlayerPort;
+    private int thisPort;
+    //TODO var for keeping track of current player color
+
+    private Server server;
+    private Client client;
 
     /******************************************************************
      * A constructor that sets up the panel.
@@ -80,7 +88,17 @@ public class ChessPanel extends JPanel {
         listener = new listener();
         createIcons();
 
-        this.askForAI();
+        //TODO: create dialog asking to either start a new game or join a existing one
+        //TODO: create a second dialog for if the user chooses to start a new game to decide the color they will be playing and the port number
+        //TODO: create a dialog for when the user chooses to join an existing game to specify the IP and port num of the game they are joining
+
+        int player = 1;
+
+        server = new Server(thisPort, model, player);
+        client = new Client(otherPlayerPort, player, otherPlayerIP);
+
+
+       // this.askForAI();
         //generates message at start of game prompting
         // the user for the number of players
 
