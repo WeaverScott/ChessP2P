@@ -1,6 +1,7 @@
 package chess;
 
 import java.io.*;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.StringTokenizer;
@@ -13,33 +14,37 @@ public class Server {
     Player player;
 
     public Server (int port, ChessModel model){
-        System.out.print("server has: " + port);
+        System.out.print("server has port: " + port);
 
         this.model = model;
+        player = model.currentPlayer();
 
         try {
             ServerSocket server = new ServerSocket(port);
             socket = server.accept();
             DataInputStream clientInput = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
-            while (true){
-                String message = clientInput.readUTF();
-                if (message.equals("eof")) {
-                    break;
-                }
-
-                StringTokenizer tokens = new StringTokenizer(message);
-                String player = tokens.nextToken();
-
-                if (player.equals("BLACK")){
-                    player = Player.BLACK.toString();
-                }else{
-                    player = Player.WHITE.toString();
-                }
-
-                clientIP = tokens.nextToken();
-
-
-            }
+           // String message;
+//            while (true) {
+//                String message = clientInput.readUTF();
+//                if (message.equals("eof")) {
+//                    break;
+//                }
+//
+//
+//               // StringTokenizer tokens = new StringTokenizer(message);
+//                ///String player = tokens.nextToken();
+//
+////                if (player.equals("BLACK")){
+////                    player = Player.BLACK.toString();
+////                }else{
+////                    player = Player.WHITE.toString();
+////                }
+//
+//                clientIP = message;
+//                        //tokens.nextToken();
+//
+//
+//            }
 
 
 
@@ -47,6 +52,8 @@ public class Server {
             System.err.println("Could not listen on port: " + port);
             System.exit(-1);
         }
+
+        System.out.println("Server: " + player + clientIP);
 
         while(true){
             String moveIn;
@@ -80,8 +87,12 @@ public class Server {
     }
 
 
-    public String getClientIP(){
-        return clientIP;
+//    public String getClientIP(){
+//        return socket.getInetAddress();
+//    }
+
+    public InetAddress getClientIP() {
+        return socket.getInetAddress();
     }
 
    public Player getPlayer(){

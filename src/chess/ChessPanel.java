@@ -87,10 +87,11 @@ public class ChessPanel extends JPanel {
 
 
         if(this.askStartNewGame()){
+            player = Player.WHITE;
             System.out.println("new game");
             port = this.askForPort();
             System.out.println(port);
-            player = this.askForColor();
+            //player = this.askForColor();
             System.out.println(player);
 
             model = new ChessModel(player);
@@ -102,6 +103,7 @@ public class ChessPanel extends JPanel {
 
 
         }else{
+            player = Player.BLACK;
             System.out.println("join existing");
             otherPlayerIP = this.askForJoiningIP();
             System.out.println(otherPlayerIP);
@@ -111,6 +113,7 @@ public class ChessPanel extends JPanel {
 //            player = this.askForColor();
 //            System.out.println(player);
 
+            model = new ChessModel(player);
 
             client = new Client(port, otherPlayerIP);
 

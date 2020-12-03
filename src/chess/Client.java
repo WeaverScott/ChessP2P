@@ -2,30 +2,34 @@ package chess;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.net.Inet4Address;
+import java.net.InetAddress;
 import java.net.Socket;
 
 public class Client {
 
     Socket socket;
-    Player player;
+    //Player player;
     int port;
-    String IPaddr;
+    //String ServerstringIPaddr;
+   // InetAddress ServerIPaddr;
 
     public Client (int port, String IPaddr){
         this.port = port;
        // this.player = player;
-        this.IPaddr = IPaddr;
+       // ServerIPaddr = IPaddr;
 
-        System.out.print("client has: " + port + " " + player + " " + IPaddr);
+
+
 
 
 
         try {
             socket = new Socket(IPaddr, port);
-            String message = player + " " + IPaddr;
-            DataOutputStream outToServer = new DataOutputStream(socket.getOutputStream());
-            outToServer.writeUTF(message);
-            outToServer.writeUTF("eof");
+//            String message = Inet4Address.getLocalHost();
+//            DataOutputStream outToServer = new DataOutputStream(socket.getOutputStream());
+//            outToServer.writeUTF(message);
+//            outToServer.writeUTF("eof");
         } catch (IOException e) {
             System.err.println("Could not listen on port: " + port);
             System.exit(-1);
@@ -33,9 +37,38 @@ public class Client {
 
         //send current player color
 
+        System.out.print("client has: " + port + " " + IPaddr);
+
+    }
+
+    public Client (int port, InetAddress IPaddr){
+        this.port = port;
+        // this.player = player;
+        //ServerIPaddr = IPaddr;
+
+
+
+
+
+
+        try {
+            socket = new Socket(IPaddr, port);
+//            String message = Inet4Address.getLocalHost();
+//            DataOutputStream outToServer = new DataOutputStream(socket.getOutputStream());
+//            outToServer.writeUTF(message);
+//            outToServer.writeUTF("eof");
+        } catch (IOException e) {
+            System.err.println("Could not listen on port: " + port);
+            System.exit(-1);
+        }
+
+        //send current player color
+
+        System.out.print("client has: " + port + " " + IPaddr);
 
 
     }
+
 
     public void sendToOtherPlayer(int fromRow, int fromColumn, int toRow, int toColumn){
 
