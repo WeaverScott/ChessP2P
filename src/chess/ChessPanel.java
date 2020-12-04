@@ -72,8 +72,8 @@ public class ChessPanel extends JPanel {
     private boolean AIisActive = false;
 
     private String otherPlayerIP;
-    private int port;
-    //TODO var for keeping track of current player color
+    private int ThisPort; //port of this server process
+    private int otherPort; //port of connecting server process
     private Player player;
 
     private Server server;
@@ -89,17 +89,20 @@ public class ChessPanel extends JPanel {
         if(this.askStartNewGame()){
             player = Player.WHITE;
             System.out.println("new game");
-            port = this.askForPort();
-            System.out.println(port);
+            ThisPort = this.askForThisPort();
+            otherPort = this.askForOtherPort();
+            System.out.println(ThisPort);
             //player = this.askForColor();
             System.out.println(player);
 
             model = new ChessModel(player);
-            server = new Server(port, model);
+            server = new Server(ThisPort, model);
+            System.out.println("starter has created server");
 
 
             //server tells client ip of joining
-            client = new Client(port, server.getClientIP());
+            client = new Client(otherPort, server.getClientIP());
+            System.out.println("starter has created client");
 
 
         }else{
@@ -107,18 +110,23 @@ public class ChessPanel extends JPanel {
             System.out.println("join existing");
             otherPlayerIP = this.askForJoiningIP();
             System.out.println(otherPlayerIP);
-            port = this.askForPort();
-            System.out.println(port);
+            ThisPort = this.askForThisPort();
+           // System.out.println(otherPort);
+            otherPort = this.askForOtherPort();
 
 //            player = this.askForColor();
 //            System.out.println(player);
 
             model = new ChessModel(player);
 
-            client = new Client(port, otherPlayerIP);
+            client = new Client(otherPort, otherPlayerIP);
+            System.out.println("joiner has created clietn");
 
-            server = new Server(port, model);
+            server = new Server(ThisPort,model);
+            System.out.println("joiner has created server");
         }
+
+        System.out.print("connection createad");
 
 
         //int player = 1;
@@ -260,19 +268,19 @@ public class ChessPanel extends JPanel {
      *****************************************************************/
     private void createIcons() {
         // Sets the Image for white player pieces
-        wRook = new ImageIcon("./src/chess/wRook.png");
-        wBishop = new ImageIcon("./src/chess/wBishop.png");
-        wQueen = new ImageIcon("./src/chess/wQueen.png");
-        wKing = new ImageIcon("./src/chess/wKing.png");
-        wPawn = new ImageIcon("./src/chess/wPawn.png");
-        wKnight = new ImageIcon("./src/chess/wKnight.png");
+        wRook = new ImageIcon("./chess/wRook.png");
+        wBishop = new ImageIcon("./chess/wBishop.png");
+        wQueen = new ImageIcon("./chess/wQueen.png");
+        wKing = new ImageIcon("./chess/wKing.png");
+        wPawn = new ImageIcon("./chess/wPawn.png");
+        wKnight = new ImageIcon("./chess/wKnight.png");
         //Sets the Image for black player pieces
-        bRook = new ImageIcon("./src/chess/bRook.png");
-        bBishop = new ImageIcon("./src/chess/bBishop.png");
-        bQueen = new ImageIcon("./src/chess/bQueen.png");
-        bKing = new ImageIcon("./src/chess/bKing.png");
-        bPawn = new ImageIcon("./src/chess/bPawn.png");
-        bKnight = new ImageIcon("./src/chess/bKnight.png");
+        bRook = new ImageIcon("./chess/bRook.png");
+        bBishop = new ImageIcon("./chess/bBishop.png");
+        bQueen = new ImageIcon("./chess/bQueen.png");
+        bKing = new ImageIcon("./chess/bKing.png");
+        bPawn = new ImageIcon("./chess/bPawn.png");
+        bKnight = new ImageIcon("./chess/bKnight.png");
     }
 
     /******************************************************************
@@ -379,8 +387,12 @@ public class ChessPanel extends JPanel {
 
     }
 
-    private int askForPort(){
-        return Integer.parseInt(JOptionPane.showInputDialog("Enter the port number of the game"));
+    private int askForThisPort(){
+        return Integer.parseInt(JOptionPane.showInputDialog("Enter the port number of your local game"));
+    }
+
+    private int askForOtherPort(){
+        return Integer.parseInt(JOptionPane.showInputDialog("Enter the port number of the game you are joining"));
     }
 
     private Player askForColor(){

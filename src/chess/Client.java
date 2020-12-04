@@ -18,6 +18,7 @@ public class Client {
         this.port = port;
        // this.player = player;
        // ServerIPaddr = IPaddr;
+        System.out.println("client begin (joiner version)");
 
 
 
@@ -37,7 +38,7 @@ public class Client {
 
         //send current player color
 
-        System.out.print("client has: " + port + " " + IPaddr);
+        System.out.print("(client end) client has: " + port + " " + IPaddr);
 
     }
 
@@ -46,7 +47,7 @@ public class Client {
         // this.player = player;
         //ServerIPaddr = IPaddr;
 
-
+        System.out.println("client begin (starter version)");
 
 
 
@@ -64,7 +65,7 @@ public class Client {
 
         //send current player color
 
-        System.out.print("client has: " + port + " " + IPaddr);
+        System.out.print(" (cleint end) client has: " + port + " " + IPaddr);
 
 
     }

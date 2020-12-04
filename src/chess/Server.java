@@ -10,41 +10,20 @@ public class Server {
 
     Socket socket;
     ChessModel model;
-    String clientIP;
+   // String clientIP;
     Player player;
 
     public Server (int port, ChessModel model){
-        System.out.print("server has port: " + port);
+        System.out.print("(server begin) server has port: " + port);
 
         this.model = model;
         player = model.currentPlayer();
 
         try {
+            //ServerSocket server = new ServerSocket();
             ServerSocket server = new ServerSocket(port);
             socket = server.accept();
-            DataInputStream clientInput = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
-           // String message;
-//            while (true) {
-//                String message = clientInput.readUTF();
-//                if (message.equals("eof")) {
-//                    break;
-//                }
-//
-//
-//               // StringTokenizer tokens = new StringTokenizer(message);
-//                ///String player = tokens.nextToken();
-//
-////                if (player.equals("BLACK")){
-////                    player = Player.BLACK.toString();
-////                }else{
-////                    player = Player.WHITE.toString();
-////                }
-//
-//                clientIP = message;
-//                        //tokens.nextToken();
-//
-//
-//            }
+         //   DataInputStream clientInput = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
 
 
 
@@ -53,8 +32,18 @@ public class Server {
             System.exit(-1);
         }
 
-        System.out.println("Server: " + player + clientIP);
+        System.out.println("(server end) Server: " + player);
 
+       // this.run();
+
+    }
+
+
+//    public String getClientIP(){
+//        return socket.getInetAddress();
+//    }
+
+    private void run (){
         while(true){
             String moveIn;
             try {
@@ -66,7 +55,7 @@ public class Server {
                 int toRow = Character.getNumericValue(moveIn.charAt(2));
                 int toCol = Character.getNumericValue(moveIn.charAt(3));
 
-               // Move move = new Move(fromRow,fromCol,toRow,toCol);
+                // Move move = new Move(fromRow,fromCol,toRow,toCol);
                 // we need a way for the server class to communicate with the Chessmodel object intstantiated in ChessPanel
                 //i think we should have Chesspanel instantiate server and client and pass chess model to server
                 //while chesspanel calls a client method everytime the local player moves a piece but idk this is just the skeleton code
@@ -83,17 +72,22 @@ public class Server {
 
 
         }
-
     }
 
-
-//    public String getClientIP(){
-//        return socket.getInetAddress();
-//    }
 
     public InetAddress getClientIP() {
+        System.out.print("get ip function entered");
         return socket.getInetAddress();
     }
+
+//    public int getOtherPort(){
+//        return
+//    }
+//
+//    //private int send
+
+
+
 
    public Player getPlayer(){
         return player;
