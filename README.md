@@ -8,11 +8,16 @@ let me know if you think another method of implementing this would be better
 
 
 TODO:
+
+code for moving pieces on chessboard after other player makes a move
+
 a way to pause the chess game and resume later
 
-finish code for communicating moves between the two players
-
 update current player message on GUI to be accurate
+
+project report document: https://docs.google.com/document/d/1qPFpC5345-N-q53cAA-SwvuRChfkLaknbqNqsMb6gac/edit?usp=sharing
+
+10 minute project demo video
 
 
 HOW TO RUN AND TEST:
