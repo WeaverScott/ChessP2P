@@ -109,7 +109,7 @@ public class ChessPanel extends JPanel {
             player = Player.BLACK;
             System.out.println("join existing");
             otherPlayerIP = this.askForJoiningIP();
-            System.out.println(otherPlayerIP);
+            System.out.println("otherplayerIP" + otherPlayerIP);
             ThisPort = this.askForThisPort();
            // System.out.println(otherPort);
             otherPort = this.askForOtherPort();
@@ -126,7 +126,9 @@ public class ChessPanel extends JPanel {
             System.out.println("joiner has created server");
         }
 
-        System.out.print("connection createad");
+        System.out.println("exited if else starter in Chesspanel");
+
+        client.sendToOtherPlayer(1,2,3,4);
 
 
         //int player = 1;

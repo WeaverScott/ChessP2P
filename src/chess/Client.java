@@ -38,7 +38,7 @@ public class Client {
 
         //send current player color
 
-        System.out.print("(client end) client has: " + port + " " + IPaddr);
+        System.out.println("(client end) client has: " + port + " " + IPaddr);
 
     }
 
@@ -65,7 +65,7 @@ public class Client {
 
         //send current player color
 
-        System.out.print(" (cleint end) client has: " + port + " " + IPaddr);
+        System.out.println(" (cleint end) client has: " + port + " " + IPaddr);
 
 
     }
@@ -74,9 +74,11 @@ public class Client {
     public void sendToOtherPlayer(int fromRow, int fromColumn, int toRow, int toColumn){
 
         String moveOut = Integer.toString(fromRow) + Integer.toString(fromColumn) + Integer.toString(toRow) + Integer.toString(toColumn);
+        System.out.println("cleint method sending: " + moveOut);
         try {
             DataOutputStream outToServer = new DataOutputStream(socket.getOutputStream());
             outToServer.writeUTF(moveOut);
+            outToServer.writeUTF("eof");
         }catch (IOException e){
             System.err.println("Could not get output stream");
             System.exit(-1);
