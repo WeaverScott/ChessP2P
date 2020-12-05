@@ -14,22 +14,17 @@ public class ServerThread extends Thread{
     }
 
     public void run (){
-        System.out.println("entered run method in thread");
-        System.out.println("this is just to prove that the most recent version of Serverthread is being used 0");
+
         while(true){
-            String moveIn;
+
             try {
                 DataInputStream inFromClient = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
 
-
                 while(true){
-                    moveIn = inFromClient.readUTF();
-                    System.out.println("server thread got: " + moveIn);
+                    String moveIn = inFromClient.readUTF();
                     if (moveIn.equals("eof")){
                         break;
                     }
-
-
                     int fromRow = Character.getNumericValue(moveIn.charAt(0));
                     int fromCol = Character.getNumericValue(moveIn.charAt(1));
                     int toRow = Character.getNumericValue(moveIn.charAt(2));
@@ -49,11 +44,7 @@ public class ServerThread extends Thread{
                 System.exit(-1);
             }
 
-
-
-
         }
     }
-
 
 }

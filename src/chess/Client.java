@@ -9,76 +9,46 @@ import java.net.Socket;
 public class Client {
 
     Socket socket;
-    //Player player;
-    int port;
-    //String ServerstringIPaddr;
-   // InetAddress ServerIPaddr;
 
+    int port;
+
+    //version of the constructor for when were joining a game, the only difference is the type of IPaddr
     public Client (int port, String IPaddr){
         this.port = port;
-       // this.player = player;
-       // ServerIPaddr = IPaddr;
-        System.out.println("client begin (joiner version)");
-
-
-
-
-
 
         try {
             socket = new Socket(IPaddr, port);
-//            String message = Inet4Address.getLocalHost();
-//            DataOutputStream outToServer = new DataOutputStream(socket.getOutputStream());
-//            outToServer.writeUTF(message);
-//            outToServer.writeUTF("eof");
         } catch (IOException e) {
             System.err.println("Could not listen on port: " + port);
             System.exit(-1);
         }
 
-        //send current player color
-
-        System.out.println("(client end) client has: " + port + " " + IPaddr);
-
     }
 
+    //version of the constructor for when were starting a new game
     public Client (int port, InetAddress IPaddr){
         this.port = port;
-        // this.player = player;
-        //ServerIPaddr = IPaddr;
-
-        System.out.println("client begin (starter version)");
-
-
-
 
         try {
             socket = new Socket(IPaddr, port);
-//            String message = Inet4Address.getLocalHost();
-//            DataOutputStream outToServer = new DataOutputStream(socket.getOutputStream());
-//            outToServer.writeUTF(message);
-//            outToServer.writeUTF("eof");
+
         } catch (IOException e) {
             System.err.println("Could not listen on port: " + port);
             System.exit(-1);
         }
 
-        //send current player color
-
-        System.out.println(" (cleint end) client has: " + port + " " + IPaddr);
-
-
     }
 
 
+    //call this in ChessPanel to send the local player's move to the other player
     public void sendToOtherPlayer(int fromRow, int fromColumn, int toRow, int toColumn){
 
         String moveOut = Integer.toString(fromRow) + Integer.toString(fromColumn) + Integer.toString(toRow) + Integer.toString(toColumn);
-        System.out.println("cleint method sending: " + moveOut);
+
         try {
             DataOutputStream outToServer = new DataOutputStream(socket.getOutputStream());
             outToServer.writeUTF(moveOut);
-            outToServer.writeUTF("eof");
+            outToServer.writeUTF("eof"); //lets server know message is over
         }catch (IOException e){
             System.err.println("Could not get output stream");
             System.exit(-1);

@@ -88,50 +88,33 @@ public class ChessPanel extends JPanel {
 
         if(this.askStartNewGame()){
             player = Player.WHITE;
-            System.out.println("new game");
             ThisPort = this.askForThisPort();
             otherPort = this.askForOtherPort();
-            System.out.println(ThisPort);
-            //player = this.askForColor();
-            System.out.println(player);
 
             model = new ChessModel(player);
             server = new Server(ThisPort, model);
-            System.out.println("starter has created server");
-
 
             //server tells client ip of joining
-            client = new Client(otherPort, server.getClientIP());
-            System.out.println("starter has created client");
-
+            client = new Client(otherPort, server.getOtherPlayerIP());
 
         }else{
             player = Player.BLACK;
-            System.out.println("join existing");
             otherPlayerIP = this.askForJoiningIP();
-            System.out.println("otherplayerIP" + otherPlayerIP);
             ThisPort = this.askForThisPort();
-           // System.out.println(otherPort);
             otherPort = this.askForOtherPort();
 
-//            player = this.askForColor();
-//            System.out.println(player);
-
             model = new ChessModel(player);
-
             client = new Client(otherPort, otherPlayerIP);
-            System.out.println("joiner has created clietn");
-
             server = new Server(ThisPort,model);
-            System.out.println("joiner has created server");
+
         }
 
-        System.out.println("exited if else starter in Chesspanel");
-
-        client.sendToOtherPlayer(1,2,3,4);
 
 
-        //int player = 1;
+
+
+
+
 
         model = new ChessModel(player);
         board = new JButton[model.numRows()][model.numColumns()];
@@ -139,7 +122,7 @@ public class ChessPanel extends JPanel {
         createIcons();
 
 
-        //client = new Client(otherPlayerPort, player, otherPlayerIP);
+
 
 
        // this.askForAI();

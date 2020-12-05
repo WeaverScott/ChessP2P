@@ -10,26 +10,23 @@ public class Server {
 
     Socket socket;
     ChessModel model;
-   // String clientIP;
-    Player player;
+   // Player player;
     ServerThread thread;
 
     public Server (int port, ChessModel model){
-        System.out.println("(server begin) server has port: " + port);
 
         this.model = model;
-        player = model.currentPlayer();
+       // player = model.currentPlayer();
 
         try {
-            //ServerSocket server = new ServerSocket();
+
             ServerSocket server = new ServerSocket(port);
             socket = server.accept();
-         //   DataInputStream clientInput = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
 
+            //starts another thread so the server can listen for info from other player
             thread = new ServerThread(socket, model);
             Thread t = new Thread(thread);
             t.start();
-
 
 
         }catch (IOException e){
@@ -37,37 +34,15 @@ public class Server {
             System.exit(-1);
         }
 
-        System.out.println("(server end constructor) Server: " + player);
-
-       // this.run();
-
     }
 
-
-//    public String getClientIP(){
-//        return socket.getInetAddress();
-//    }
-
-
-
-
-    public InetAddress getClientIP() {
-        System.out.println("get ip function entered");
+    public InetAddress getOtherPlayerIP() {
         return socket.getInetAddress();
     }
 
-//    public int getOtherPort(){
-//        return
-//    }
-//
-//    //private int send
-
-
-
-
-   public Player getPlayer(){
-        return player;
-   }
+//   public Player getPlayer(){
+//        return player;
+//   }
 
 }
 
