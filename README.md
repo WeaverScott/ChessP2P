@@ -9,11 +9,7 @@ let me know if you think another method of implementing this would be better
 
 TODO:
 
-done - code for moving pieces on chessboard after other player makes a move
-
 get undo moves to reflect on both clients
-
-get player label and currentPlayer to update on client that didn't make the move to disallow either client from moving both color pieces
 
 on pawn reaching other side, get pawn change to reflect on other client
 
