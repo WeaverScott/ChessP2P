@@ -10,7 +10,7 @@ public class Server {
 
     Socket socket;
     ChessModel model;
-    ChessPanel panel;
+    ChessPanel panel;       // added panel to allow for board updating
     Player player;
     ServerThread thread;
 

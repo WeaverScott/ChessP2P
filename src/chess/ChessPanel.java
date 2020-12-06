@@ -123,7 +123,7 @@ public class ChessPanel extends JPanel {
 
 
 
-        model.setPlayer(Player.WHITE);
+        model.setPlayer(Player.WHITE);  // make it so WHITE is always first player
 
 
 
@@ -412,7 +412,7 @@ public class ChessPanel extends JPanel {
         public void actionPerformed(ActionEvent event) {
             for (int r = 0; r < model.numRows(); r++) {
                 for (int c = 0; c < model.numColumns(); c++) {
-//                    if (currentPlayerLabel.getText().equals("Current player: " + player.toString())) {
+                    if (player == model.currentPlayer()) {      // can only make a move when it is this client's turn
                         if (board[r][c] == event.getSource()) {
                             if (firstTurnFlag) {
                                 fromRow = r;
@@ -483,7 +483,7 @@ public class ChessPanel extends JPanel {
                                                             toColumn);
                                         }
                                         model.move(m);
-                                        client.sendToOtherPlayer(m.fromRow, m.fromColumn, m.toRow, m.toColumn);
+                                        client.sendToOtherPlayer(m.fromRow, m.fromColumn, m.toRow, m.toColumn); // send move to other client
                                         model.setLastMove(m);
                                         model.rookCastling(m);
                                         model.pawnPromoted(m);
@@ -499,7 +499,7 @@ public class ChessPanel extends JPanel {
                                 }
                             }
                         }
-//                    }
+                    }
 
                 }
             }

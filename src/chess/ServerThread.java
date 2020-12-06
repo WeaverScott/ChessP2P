@@ -7,7 +7,7 @@ public class ServerThread extends Thread{
 
     private Socket socket;
     ChessModel model;
-    ChessPanel panel;
+    ChessPanel panel;       // added panel to allow for board updating
 
     public ServerThread(Socket socket, ChessModel model, ChessPanel panel){
         this.socket = socket;
@@ -32,12 +32,15 @@ public class ServerThread extends Thread{
                     int toRow = Character.getNumericValue(moveIn.charAt(2));
                     int toCol = Character.getNumericValue(moveIn.charAt(3));
 
-                    model.move(new Move(fromRow, fromCol, toRow, toCol));
+                    Move newMove = new Move(fromRow, fromCol, toRow, toCol);    // move from other client
 
-                    model.setNextPlayer();
-
-                    panel.displayBoard();
-
+                    // make move happen on this client
+                    model.move(newMove);
+                    model.setLastMove(newMove);
+                    model.rookCastling(newMove);
+                    model.pawnPromoted(newMove);
+                    model.setNextPlayer();      // change current player to next
+                    panel.displayBoard();       // update board view
                 }
 
 

@@ -49,7 +49,7 @@ public class Client {
             outToServer.writeUTF(moveOut);
 
             outToServer.writeUTF("eof"); //lets server know message is over
-        }catch (IOException e){
+        } catch (IOException e){
             System.err.println("Could not get output stream");
             System.exit(-1);
         }
