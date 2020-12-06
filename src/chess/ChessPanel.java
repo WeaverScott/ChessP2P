@@ -84,20 +84,18 @@ public class ChessPanel extends JPanel {
      *****************************************************************/
     public ChessPanel() {
 
-
-
         if(this.askStartNewGame()){
             player = Player.WHITE;
             ThisPort = this.askForThisPort();
             otherPort = this.askForOtherPort();
 
             model = new ChessModel(player);
-            server = new Server(ThisPort, model);
+            server = new Server(ThisPort, model, this);
 
             //server tells client ip of joining
             client = new Client(otherPort, server.getOtherPlayerIP());
 
-        }else{
+        } else{
             player = Player.BLACK;
             otherPlayerIP = this.askForJoiningIP();
             ThisPort = this.askForThisPort();
@@ -105,7 +103,7 @@ public class ChessPanel extends JPanel {
 
             model = new ChessModel(player);
             client = new Client(otherPort, otherPlayerIP);
-            server = new Server(ThisPort,model);
+            server = new Server(ThisPort, model, this);
 
         }
 
@@ -116,10 +114,16 @@ public class ChessPanel extends JPanel {
 
 
 
-        model = new ChessModel(player);
+
+
         board = new JButton[model.numRows()][model.numColumns()];
         listener = new listener();
         createIcons();
+
+
+
+
+        model.setPlayer(Player.WHITE);
 
 
 
@@ -271,7 +275,7 @@ public class ChessPanel extends JPanel {
     /******************************************************************
      * A method that updates the board.
      *****************************************************************/
-    private void displayBoard() {
+    public void displayBoard() {
 
         for (int r = 0; r < 8; r++) {
             for (int c = 0; c < 8; c++)
@@ -408,87 +412,95 @@ public class ChessPanel extends JPanel {
         public void actionPerformed(ActionEvent event) {
             for (int r = 0; r < model.numRows(); r++) {
                 for (int c = 0; c < model.numColumns(); c++) {
-                    if (board[r][c] == event.getSource()) {
-                        if (firstTurnFlag) {
-                            fromRow = r;
-                            fromCol = c;
+//                    if (currentPlayerLabel.getText().equals("Current player: " + player.toString())) {
+                        if (board[r][c] == event.getSource()) {
+                            if (firstTurnFlag) {
+                                fromRow = r;
+                                fromCol = c;
 
-                            firstTurnFlag = false;
-                        } else {
-                            toRow = r;
-                            toCol = c;
-                            firstTurnFlag = true;
-                            Move m = new Move(fromRow, fromCol, toRow,
-                                    toCol);
-                            model.setCurrentMove(m);
-
-                            //when move completes game
-                            if (model.isComplete()) {
-                                break;
-                            }
-                            //when move is into check
-                            if (model.isValidMove(m).isMovedIntoCheck()) {
-                                JOptionPane.showMessageDialog(null,
-                                        "Cannot move into check");
-                            }
-                            //when move puts player into check
-                            if (model.isValidMove(m).isInCheck()) {
-                                JOptionPane.showMessageDialog(null,
-                                        model.currentPlayer() +
-                                                " is in check");
-                            }
-
-                            //insert ifs and dialog boxes
-                            if ((model.isValidMove(m)
-                                    .isMoveSuccessful())) {
-                                if (AIisActive) {
-                                    state.saveState(model);
-                                    if (model.isEnPassant(model.
-                                            getCurrentMove(), model.
-                                            getLastMove())) {
-                                        model.removeFromBoard(model.
-                                                getLastMove().toRow,
-                                                model.getLastMove().
-                                                        toColumn);
-                                    }
-                                    model.move(m);
-                                    model.setLastMove(m);
-                                    model.rookCastling(m);
-                                    model.pawnPromoted(m);
-                                    if (model.isComplete()) {
-                                        JOptionPane.showMessageDialog(
-                                                null, "Checkmate!");
-                                    } else if (model.inCheck(Player.BLACK)) {
-                                        JOptionPane.showMessageDialog(
-                                                null, "BLACK" +
-                                                        " is in check");
-                                    }
-                                    model.AI();
-                                    model.setLastMove(m);
-                                    displayBoard();
-                                } else {
-                                    state.saveState(model);
-                                    if (model.isEnPassant(model.
-                                            getCurrentMove(), model.
-                                            getLastMove())) {
-                                        model.removeFromBoard(model.
-                                                getLastMove().toRow,
-                                                model.getLastMove().
-                                                        toColumn);
-                                    }
-                                    model.move(m);
-                                    model.setLastMove(m);
-                                    model.rookCastling(m);
-                                    model.pawnPromoted(m);
-                                    model.setNextPlayer();
-                                    displayBoard();
-                                }
+                                firstTurnFlag = false;
                             } else {
-                                JOptionPane.showMessageDialog(null,
-                                        "Move invalid");
+                                toRow = r;
+                                toCol = c;
+                                firstTurnFlag = true;
+                                Move m = new Move(fromRow, fromCol, toRow,
+                                        toCol);
+                                model.setCurrentMove(m);
+
+                                //when move completes game
+                                if (model.isComplete()) {
+                                    break;
+                                }
+                                //when move is into check
+                                if (model.isValidMove(m).isMovedIntoCheck()) {
+                                    JOptionPane.showMessageDialog(null,
+                                            "Cannot move into check");
+                                }
+                                //when move puts player into check
+                                if (model.isValidMove(m).isInCheck()) {
+                                    JOptionPane.showMessageDialog(null,
+                                            model.currentPlayer() +
+                                                    " is in check");
+                                }
+
+                                //insert ifs and dialog boxes
+                                if ((model.isValidMove(m)
+                                        .isMoveSuccessful())) {
+                                    if (AIisActive) {
+                                        state.saveState(model);
+                                        if (model.isEnPassant(model.
+                                                getCurrentMove(), model.
+                                                getLastMove())) {
+                                            model.removeFromBoard(model.
+                                                            getLastMove().toRow,
+                                                    model.getLastMove().
+                                                            toColumn);
+                                        }
+                                        model.move(m);
+
+                                        model.setLastMove(m);
+                                        model.rookCastling(m);
+                                        model.pawnPromoted(m);
+                                        if (model.isComplete()) {
+                                            JOptionPane.showMessageDialog(
+                                                    null, "Checkmate!");
+                                        } else if (model.inCheck(Player.BLACK)) {
+                                            JOptionPane.showMessageDialog(
+                                                    null, "BLACK" +
+                                                            " is in check");
+                                        }
+                                        model.AI();
+                                        model.setLastMove(m);
+                                        displayBoard();
+                                    } else {
+                                        state.saveState(model);
+                                        if (model.isEnPassant(model.
+                                                getCurrentMove(), model.
+                                                getLastMove())) {
+                                            model.removeFromBoard(model.
+                                                            getLastMove().toRow,
+                                                    model.getLastMove().
+                                                            toColumn);
+                                        }
+                                        model.move(m);
+                                        client.sendToOtherPlayer(m.fromRow, m.fromColumn, m.toRow, m.toColumn);
+                                        model.setLastMove(m);
+                                        model.rookCastling(m);
+                                        model.pawnPromoted(m);
+                                        model.setNextPlayer();
+                                        displayBoard();
+                                    }
+
+                                    displayBoard();
+
+                                } else {
+                                    JOptionPane.showMessageDialog(null,
+                                            "Move invalid");
+                                }
                             }
                         }
-                    }
+//                    }
+
                 }
             }
             if (undoBtn == event.getSource()) {

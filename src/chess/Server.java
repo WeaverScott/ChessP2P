@@ -10,21 +10,24 @@ public class Server {
 
     Socket socket;
     ChessModel model;
-   // Player player;
+    ChessPanel panel;
+    Player player;
     ServerThread thread;
 
-    public Server (int port, ChessModel model){
+    public Server (int port, ChessModel model, ChessPanel panel){
 
         this.model = model;
-       // player = model.currentPlayer();
+        this.panel = panel;
+        player = model.currentPlayer();
 
         try {
 
             ServerSocket server = new ServerSocket(port);
             socket = server.accept();
 
+
             //starts another thread so the server can listen for info from other player
-            thread = new ServerThread(socket, model);
+            thread = new ServerThread(socket, model, panel);
             Thread t = new Thread(thread);
             t.start();
 

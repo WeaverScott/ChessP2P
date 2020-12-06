@@ -7,10 +7,12 @@ public class ServerThread extends Thread{
 
     private Socket socket;
     ChessModel model;
+    ChessPanel panel;
 
-    public ServerThread(Socket socket, ChessModel model){
+    public ServerThread(Socket socket, ChessModel model, ChessPanel panel){
         this.socket = socket;
         this.model = model;
+        this.panel = panel;
     }
 
     public void run (){
@@ -29,6 +31,13 @@ public class ServerThread extends Thread{
                     int fromCol = Character.getNumericValue(moveIn.charAt(1));
                     int toRow = Character.getNumericValue(moveIn.charAt(2));
                     int toCol = Character.getNumericValue(moveIn.charAt(3));
+
+                    model.move(new Move(fromRow, fromCol, toRow, toCol));
+
+                    model.setNextPlayer();
+
+                    panel.displayBoard();
+
                 }
 
 
