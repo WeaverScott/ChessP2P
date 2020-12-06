@@ -9,7 +9,7 @@ let me know if you think another method of implementing this would be better
 
 TODO:
 
-code for moving pieces on chessboard after other player makes a move
+done - code for moving pieces on chessboard after other player makes a move
 
 get undo moves to reflect on both clients
 
