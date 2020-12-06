@@ -28,7 +28,7 @@ open a terminal (not associtated with your IDE) in the 'src' folder
 
 enter 'javac chess/ChessGUI.java'
 
-enter 'java chess/ChessGUI.java'
+enter 'java chess/ChessGUI'
 
 select start new game 
 
