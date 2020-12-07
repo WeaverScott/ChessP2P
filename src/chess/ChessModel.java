@@ -339,7 +339,7 @@ public class ChessModel implements IChessModel {
      * back row.
      * @param move the move (hopefully to the back row).
      *****************************************************************/
-    public void pawnPromoted(Move move) {
+    public int pawnPromoted(Move move) {
         if(board[move.toRow][move.toColumn] != null) {
             if (board[move.toRow][move.toColumn].type().equals("Pawn")
                     &&
@@ -364,6 +364,31 @@ public class ChessModel implements IChessModel {
                 if (pick == 3) {
                 board[move.toRow][move.toColumn] = new Bishop(player);
                 }
+                return pick;
+            }
+        }
+        return 5;
+    }
+
+    public void pawnPromoted(Move move, String promotion) {
+        if(board[move.toRow][move.toColumn] != null) {
+            if (board[move.toRow][move.toColumn].type().equals("Pawn")
+                    &&
+                    (move.toRow == 0 || move.toRow == 7)) {
+
+                if (promotion.equals("queen")) {
+                    board[move.toRow][move.toColumn] = new Queen(player);
+                }
+                if (promotion.equals("knight")) {
+                    board[move.toRow][move.toColumn] = new Knight(player);
+                }
+                if (promotion.equals("rook")) {
+                    board[move.toRow][move.toColumn] = new Rook(player);
+                }
+                if (promotion.equals("bishop")) {
+                    board[move.toRow][move.toColumn] = new Bishop(player);
+                }
+
             }
         }
     }

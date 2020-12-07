@@ -46,14 +46,30 @@ public class Client {
 
         try {
             DataOutputStream outToServer = new DataOutputStream(socket.getOutputStream());
+            //outToServer.writeUTF("move");
             outToServer.writeUTF(moveOut);
-
             outToServer.writeUTF("eof"); //lets server know message is over
         } catch (IOException e){
             System.err.println("Could not get output stream");
             System.exit(-1);
         }
     }
+
+    public void sendToOtherPlayer(int fromRow, int fromColumn, int toRow, int toColumn, String promotion){
+        String moveOut = Integer.toString(fromRow) + Integer.toString(fromColumn) + Integer.toString(toRow) + Integer.toString(toColumn);
+        try {
+            DataOutputStream outToServer = new DataOutputStream(socket.getOutputStream());
+            //outToServer.writeUTF("promotion");
+            outToServer.writeUTF(moveOut);
+            outToServer.writeUTF(promotion);
+            outToServer.writeUTF("eof"); //lets server know message is over
+        } catch (IOException e){
+            System.err.println("Could not get output stream");
+            System.exit(-1);
+        }
+
+    }
+
 
 
 }

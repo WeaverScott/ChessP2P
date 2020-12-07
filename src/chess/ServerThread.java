@@ -21,31 +21,51 @@ public class ServerThread extends Thread{
 
             try {
                 DataInputStream inFromClient = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
-
+                int fromRow = 0;
+                int fromCol = 0;
+                int toRow = 0;
+                int toCol = 0;
+                String promotion = null;
                 while(true){
-                    String moveIn = inFromClient.readUTF();
-                    if (moveIn.equals("eof")){
+                    String command = inFromClient.readUTF();
+
+                   // System.out.println(command);
+
+                    if (command.equals("eof")){
                         break;
                     }
-                    int fromRow = Character.getNumericValue(moveIn.charAt(0));
-                    int fromCol = Character.getNumericValue(moveIn.charAt(1));
-                    int toRow = Character.getNumericValue(moveIn.charAt(2));
-                    int toCol = Character.getNumericValue(moveIn.charAt(3));
 
-                    Move newMove = new Move(fromRow, fromCol, toRow, toCol);    // move from other client
+                    if (Character.isDigit(command.charAt(0))){
+                        fromRow = Character.getNumericValue(command.charAt(0));
+                        fromCol = Character.getNumericValue(command.charAt(1));
+                        toRow = Character.getNumericValue(command.charAt(2));
+                        toCol = Character.getNumericValue(command.charAt(3));
 
-                    // make move happen on this client
-                    model.move(newMove);
-                    model.setLastMove(newMove);
-                    model.rookCastling(newMove);
-                    model.pawnPromoted(newMove);
-                    model.setNextPlayer();      // change current player to next
-                    panel.displayBoard();       // update board view
+
+                    } else {
+                        promotion = command;
+                    }
+
                 }
 
 
+                Move newMove = new Move(fromRow, fromCol, toRow, toCol);    // move from other client
 
-                //TODO: use ChessModel model to move other player's pieces on board
+                // make move happen on this client
+                model.move(newMove);
+                model.setLastMove(newMove);
+                model.rookCastling(newMove);
+
+                if (promotion != null){
+                    model.pawnPromoted(newMove, promotion);
+                }else{
+                    model.pawnPromoted(newMove);
+                }
+                //model.pawnPromoted(newMove);
+                model.setNextPlayer();      // change current player to next
+                panel.displayBoard();       // update board view
+
+
 
 
 

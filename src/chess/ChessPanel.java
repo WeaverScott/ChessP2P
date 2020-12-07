@@ -272,6 +272,24 @@ public class ChessPanel extends JPanel {
         bKnight = new ImageIcon("./chess/bKnight.png");
     }
 
+//    //for testing within intelliJ, delete later
+//    private void createIcons() {
+//        // Sets the Image for white player pieces
+//        wRook = new ImageIcon("./src/chess/wRook.png");
+//        wBishop = new ImageIcon("./src/chess/wBishop.png");
+//        wQueen = new ImageIcon("./src/chess/wQueen.png");
+//        wKing = new ImageIcon("./src/chess/wKing.png");
+//        wPawn = new ImageIcon("./src/chess/wPawn.png");
+//        wKnight = new ImageIcon("./src/chess/wKnight.png");
+//        //Sets the Image for black player pieces
+//        bRook = new ImageIcon("./src/chess/bRook.png");
+//        bBishop = new ImageIcon("./src/chess/bBishop.png");
+//        bQueen = new ImageIcon("./src/chess/bQueen.png");
+//        bKing = new ImageIcon("./src/chess/bKing.png");
+//        bPawn = new ImageIcon("./src/chess/bPawn.png");
+//        bKnight = new ImageIcon("./src/chess/bKnight.png");
+//    }
+
     /******************************************************************
      * A method that updates the board.
      *****************************************************************/
@@ -483,10 +501,23 @@ public class ChessPanel extends JPanel {
                                                             toColumn);
                                         }
                                         model.move(m);
-                                        client.sendToOtherPlayer(m.fromRow, m.fromColumn, m.toRow, m.toColumn); // send move to other client
+                                         // send move to other client
                                         model.setLastMove(m);
                                         model.rookCastling(m);
-                                        model.pawnPromoted(m);
+                                        int promotion = model.pawnPromoted(m);
+                                        //System.out.println(promotion);
+                                        if ( promotion == 0){
+                                            client.sendToOtherPlayer(m.fromRow, m.fromColumn, m.toRow, m.toColumn, "queen");
+                                        }else if (promotion == 1){
+                                            client.sendToOtherPlayer(m.fromRow, m.fromColumn, m.toRow, m.toColumn, "knight");
+                                        }else if (promotion == 2){
+                                            client.sendToOtherPlayer(m.fromRow, m.fromColumn, m.toRow, m.toColumn, "rook");
+                                        }else if (promotion == 4){
+                                            client.sendToOtherPlayer(m.fromRow, m.fromColumn, m.toRow, m.toColumn, "bishop");
+                                        } else {
+                                            client.sendToOtherPlayer(m.fromRow, m.fromColumn, m.toRow, m.toColumn);
+                                        }
+
                                         model.setNextPlayer();
                                         displayBoard();
                                     }
