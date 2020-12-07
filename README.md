@@ -15,6 +15,8 @@ a way to pause the chess game and resume later
 
 update current player message on GUI to be accurate
 
+proper exit of sockets, input streams, thread
+
 project report document: https://docs.google.com/document/d/1qPFpC5345-N-q53cAA-SwvuRChfkLaknbqNqsMb6gac/edit?usp=sharing
 
 10 minute project demo video
