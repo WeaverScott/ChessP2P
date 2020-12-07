@@ -11,8 +11,6 @@ TODO:
 
 get undo moves to reflect on both clients
 
-on pawn reaching other side, get pawn change to reflect on other client
-
 a way to pause the chess game and resume later
 
 update current player message on GUI to be accurate
