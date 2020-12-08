@@ -70,6 +70,19 @@ public class Client {
 
     }
 
+    public void sendToOtherPlayer() {	// used for undoing moves
+
+        try {
+            DataOutputStream outToServer = new DataOutputStream(socket.getOutputStream());
+            //outToServer.writeUTF("promotion");
+            outToServer.writeUTF("undo");
+            outToServer.writeUTF("eof"); //lets server know message is over
+        } catch (IOException e){
+            System.err.println("Could not get output stream");
+            System.exit(-1);
+        }
+    }
+
     public void close(){
         try{
             DataOutputStream outToServer = new DataOutputStream(socket.getOutputStream());

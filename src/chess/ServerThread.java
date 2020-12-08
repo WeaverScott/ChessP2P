@@ -27,6 +27,7 @@ public class ServerThread extends Thread{
                 int toRow = 0;
                 int toCol = 0;
                 String promotion = null;
+                boolean undo = false;
                 while(true){
                     String command = inFromClient.readUTF();
 
@@ -36,34 +37,45 @@ public class ServerThread extends Thread{
                         break;
                     }
 
-                    if (Character.isDigit(command.charAt(0))){
-                        fromRow = Character.getNumericValue(command.charAt(0));
-                        fromCol = Character.getNumericValue(command.charAt(1));
-                        toRow = Character.getNumericValue(command.charAt(2));
-                        toCol = Character.getNumericValue(command.charAt(3));
-
-
+                    if (command.equals("undo")) {
+                        undo = true;
                     } else {
-                        promotion = command;
+                        if (Character.isDigit(command.charAt(0))){
+                            fromRow = Character.getNumericValue(command.charAt(0));
+                            fromCol = Character.getNumericValue(command.charAt(1));
+                            toRow = Character.getNumericValue(command.charAt(2));
+                            toCol = Character.getNumericValue(command.charAt(3));
+
+
+                        } else {
+                            promotion = command;
+                        }
                     }
 
+
+
                 }
 
+                if (!undo) {
+                    Move newMove = new Move(fromRow, fromCol, toRow, toCol);    // move from other client
 
-                Move newMove = new Move(fromRow, fromCol, toRow, toCol);    // move from other client
+                    // make move happen on this client
+                    panel.saveThisState();
+                    model.move(newMove);
+                    model.setLastMove(newMove);
+                    model.rookCastling(newMove);
 
-                // make move happen on this client
-                model.move(newMove);
-                model.setLastMove(newMove);
-                model.rookCastling(newMove);
 
-                if (promotion != null){
-                    model.pawnPromoted(newMove, promotion);
-                }else{
-                    model.pawnPromoted(newMove);
+                    if (promotion != null){
+                        model.pawnPromoted(newMove, promotion);
+                    } else {
+                        model.pawnPromoted(newMove);
+                    }
+                    //model.pawnPromoted(newMove);
+                    model.setNextPlayer();      // change current player to next
+                } else {
+                    panel.undoStuff();
                 }
-                //model.pawnPromoted(newMove);
-                model.setNextPlayer();      // change current player to next
                 panel.displayBoard();       // update board view
 
 
