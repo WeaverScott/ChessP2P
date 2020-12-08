@@ -72,6 +72,20 @@ public class Client {
         }
     }
 
+    public void close(){
+        try{
+            DataOutputStream outToServer = new DataOutputStream(socket.getOutputStream());
+            outToServer.writeUTF("close");
+            outToServer.flush();
+            outToServer.close();
+            socket.close();
+            System.exit(0);
+        }catch(Exception e){
+            System.err.println(e);
+            System.err.println("unable to close");
+        }
+    }
+
 
 
 }

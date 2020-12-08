@@ -2,6 +2,7 @@ package chess;
 
 import java.io.*;
 import java.net.Socket;
+import java.net.SocketException;
 
 /**********************************************************************
  * A class that sends information to and from the server. 
@@ -78,8 +79,13 @@ public class ServerThread extends Thread{
 
 
 
-            }catch (IOException e){
+
+
+            }catch (SocketException e){
+                System.exit(0);
+            }catch (IOException e) {
                 System.err.println("Could not get input stream");
+                System.err.println(e);
                 System.exit(-1);
             }
 

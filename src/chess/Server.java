@@ -49,6 +49,19 @@ public class Server {
         return socket.getInetAddress();
     }
 
+    public void close(){
+        //thread.close();
+        try{
+            thread.interrupt();
+            socket.close();
+            //thread.close();
+            System.exit(0);
+        }catch (Exception e){
+            System.err.println(e);
+            System.err.println("unable to close");
+        }
+    }
+
 //   public Player getPlayer(){
 //        return player;
 //   }
