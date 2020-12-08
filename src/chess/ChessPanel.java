@@ -84,7 +84,9 @@ public class ChessPanel extends JPanel {
      *****************************************************************/
     public ChessPanel() {
 
-        if(this.askStartNewGame()){
+        int pick = this.askStartNewGame();
+
+        if(pick == 0){
             player = Player.WHITE;
             ThisPort = this.askForThisPort();
             otherPort = this.askForOtherPort();
@@ -95,7 +97,7 @@ public class ChessPanel extends JPanel {
             //server tells client ip of joining
             client = new Client(otherPort, server.getOtherPlayerIP());
 
-        } else{
+        } else if (pick == 1){
             player = Player.BLACK;
             otherPlayerIP = this.askForJoiningIP();
             ThisPort = this.askForThisPort();
@@ -105,6 +107,18 @@ public class ChessPanel extends JPanel {
             client = new Client(otherPort, otherPlayerIP);
             server = new Server(ThisPort, model, this);
 
+        }else{
+            player = Player.WHITE;
+            ThisPort = this.askForThisPort();
+            otherPort = this.askForOtherPort();
+
+            model = new ChessModel(player);
+            server = new Server(ThisPort, model, this);
+
+            //server tells client ip of joining
+            client = new Client(otherPort, server.getOtherPlayerIP());
+
+            this.loadGame();
         }
 
 
@@ -354,23 +368,19 @@ public class ChessPanel extends JPanel {
         }
     }
 
-    private boolean askStartNewGame(){
+    private int askStartNewGame(){
 
         //strings in this array correspond to the text of the buttons
-        Object[] buttons = {"Start New Game", "Join Existing Game"};
+        Object[] buttons = {"Start New Game", "Join Existing Game", "Load Game From File"};
 
-        // this is the overloaded constructor of the JOptionPane,
-        // for custom buttons
-        int result = JOptionPane.showOptionDialog(null,
-                "Start or join game?", null,
-                JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE,
-                null, buttons, buttons[0]);
 
-        if (result == JOptionPane.YES_OPTION){
-             return true;
-        }else{
-            return false;
-        }
+        int pick = JOptionPane.showOptionDialog(null, "Pick which piece you would like to promote to: ",
+                "", JOptionPane.DEFAULT_OPTION,
+                JOptionPane.INFORMATION_MESSAGE, null, buttons,
+                buttons[0]);
+
+
+        return pick;
 
     }
 
@@ -426,6 +436,8 @@ public class ChessPanel extends JPanel {
 
 
     public void saveGame(){model.saveGame();}
+
+    public void loadGame(){model.loadBoard();}
 
 
 

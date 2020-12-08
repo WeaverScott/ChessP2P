@@ -39,7 +39,6 @@ public class ChessGUI {
 
                 if (result == JOptionPane.YES_OPTION){
                     panel.saveGame();
-
                 }
 
                 super.windowClosing(windowEvent);

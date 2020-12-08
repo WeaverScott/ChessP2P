@@ -387,6 +387,8 @@ public class ChessModel implements IChessModel {
         }
     }
 
+    public void loadBoard(){System.out.println("loading game");}
+
 
 
 
