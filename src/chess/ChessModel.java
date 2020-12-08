@@ -2,7 +2,10 @@ package chess;
 
 import javax.swing.JOptionPane;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.StringTokenizer;
 
 /**********************************************************************
@@ -31,10 +34,6 @@ public class ChessModel implements IChessModel {
 
     private IChessPiece oldPiece;
 
-
-
-    //private Client client;
-
     /*****************************************************************
      * A constructor that creates the chess model.
      *****************************************************************/
@@ -42,7 +41,6 @@ public class ChessModel implements IChessModel {
         //creates the board and sets the first player to white
         board = new IChessPiece[8][8];
         player = color;
-
 
         /** Set white pieces */
         board[7][0] = new Rook(Player.WHITE);
@@ -81,9 +79,6 @@ public class ChessModel implements IChessModel {
         board[1][7] = new Pawn(Player.BLACK);
 
     }
-
-
-
 
 
 
@@ -396,39 +391,17 @@ public class ChessModel implements IChessModel {
         }
     }
 
-    //public void loadBoard(){System.out.println("loading game");}
 
-
-    public void loadBoard() {
+    public ArrayList<String> loadBoard() {
         BufferedReader reader;
         String piece;
+        ArrayList<String> listOfPieces;
         try {
             reader = new BufferedReader(new FileReader("SavedGame.txt"));
             String line = reader.readLine();
             StringTokenizer tokens = new StringTokenizer(line);
             while (tokens.hasMoreTokens()) {
-                piece = tokens.nextToken();
-                if (piece.charAt(0) == 'p') {
-                    //Client.sendPiece()
-                }
-                if (piece.charAt(0) == 'r') {
-
-                }
-                if (piece.charAt(0) == 'n') {
-
-                }
-                if (piece.charAt(0) == 'b') {
-
-                }
-                if (piece.charAt(0) == 'p') {
-
-                }
-                if (piece.charAt(0) == 'q') {
-
-                }
-                if (piece.charAt(0) == 'k') {
-
-                }
+                listOfPieces.add(tokens);
             }
         }
         catch (Exception e) {
