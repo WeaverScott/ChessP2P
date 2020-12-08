@@ -2,10 +2,7 @@ package chess;
 
 import javax.swing.JOptionPane;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.StringTokenizer;
 
 /**********************************************************************
@@ -399,7 +396,7 @@ public class ChessModel implements IChessModel {
         }
     }
 
-    public void loadBoard(){System.out.println("loading game");}
+    //public void loadBoard(){System.out.println("loading game");}
 
 
     public void loadBoard() {
