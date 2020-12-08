@@ -1,8 +1,12 @@
 package chess;
 
 import javax.swing.JOptionPane;
+
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.StringTokenizer;
 
 /**********************************************************************
  * A class that determines how the chess game functions, and gives the
@@ -388,7 +392,42 @@ public class ChessModel implements IChessModel {
     }
 
 
+    public void loadBoard() {
+        BufferedReader reader;
+        String piece;
+        try {
+            reader = new BufferedReader(new FileReader("SavedGame.txt"));
+            String line = reader.readLine();
+            StringTokenizer tokens = new StringTokenizer(line);
+            while (tokens.hasMoreTokens()) {
+                piece = tokens.nextToken();
+                if (piece.charAt(0) == 'p') {
+                    //Client.sendPiece()
+                }
+                if (piece.charAt(0) == 'r') {
 
+                }
+                if (piece.charAt(0) == 'n') {
+
+                }
+                if (piece.charAt(0) == 'b') {
+
+                }
+                if (piece.charAt(0) == 'p') {
+
+                }
+                if (piece.charAt(0) == 'q') {
+
+                }
+                if (piece.charAt(0) == 'k') {
+
+                }
+            }
+        }
+        catch (Exception e) {
+            System.err.println(e);
+        }
+    }
 
 
 
