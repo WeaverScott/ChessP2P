@@ -3,8 +3,8 @@ package chess;
 /**********************************************************************
  * A class that saves and loads states of the game.
  *
- * @author Logan Jaglowski, Sarah, and Lauren
- * @version Winter 2019
+ * @author Christian Thompson, James Weitzmanm, Josh Hubbard, 
+ *         Lauren Vanderklok, & Scott Weaver
  *********************************************************************/
 
 import java.util.ArrayList;

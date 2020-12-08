@@ -1,7 +1,11 @@
 package chess;
 
-//cannot edit this class
-
+/**********************************************************************
+ * A class that sets the player. 
+ *
+ * @author Christian Thompson, James Weitzmanm, Josh Hubbard, 
+ *         Lauren Vanderklok, & Scott Weaver
+ *********************************************************************/
 public enum Player {
     BLACK, WHITE;
 

@@ -3,7 +3,12 @@ package chess;
 import java.awt.Dimension;
 
 import javax.swing.JFrame;
-
+/**********************************************************************
+ * A class that creates the GUI.
+ *
+ * @author Christian Thompson, James Weitzmanm, Josh Hubbard, 
+ *         Lauren Vanderklok, & Scott Weaver 
+ *********************************************************************/
 public class ChessGUI {
 
     /*****************************************************************

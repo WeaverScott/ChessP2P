@@ -6,10 +6,9 @@ import javax.swing.JOptionPane;
  * A class that determines how the chess game functions, and gives the
  * blueprints to how the panel will work.
  *
- * @author Logan Jaglowski, Sarah, and Lauren
- * @version Winter 2019
+ * @author Christian Thompson, James Weitzmanm, Josh Hubbard, 
+ *         Lauren Vanderklok, & Scott Weaver
  *********************************************************************/
-
 public class ChessModel implements IChessModel {
 
     /** the last move */

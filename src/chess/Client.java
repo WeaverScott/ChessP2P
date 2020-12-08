@@ -5,7 +5,12 @@ import java.io.IOException;
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.Socket;
-
+/**********************************************************************
+ * A class that is interacts with the server. 
+ *
+ * @author Christian Thompson, James Weitzmanm, Josh Hubbard, 
+ *         Lauren Vanderklok, & Scott Weaver
+ *********************************************************************/
 public class Client {
 
     Socket socket;
@@ -41,9 +46,7 @@ public class Client {
 
     //call this in ChessPanel to send the local player's move to the other player
     public void sendToOtherPlayer(int fromRow, int fromColumn, int toRow, int toColumn){
-
         String moveOut = Integer.toString(fromRow) + Integer.toString(fromColumn) + Integer.toString(toRow) + Integer.toString(toColumn);
-
         try {
             DataOutputStream outToServer = new DataOutputStream(socket.getOutputStream());
             //outToServer.writeUTF("move");
@@ -67,7 +70,6 @@ public class Client {
             System.err.println("Could not get output stream");
             System.exit(-1);
         }
-
     }
 
 

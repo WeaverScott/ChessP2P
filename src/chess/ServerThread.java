@@ -3,6 +3,12 @@ package chess;
 import java.io.*;
 import java.net.Socket;
 
+/**********************************************************************
+ * A class that sends information to and from the server. 
+ *
+ * @author Christian Thompson, James Weitzmanm, Josh Hubbard, 
+ *         Lauren Vanderklok, & Scott Weaver
+ *********************************************************************/
 public class ServerThread extends Thread{
 
     private Socket socket;
@@ -41,8 +47,8 @@ public class ServerThread extends Thread{
                         toRow = Character.getNumericValue(command.charAt(2));
                         toCol = Character.getNumericValue(command.charAt(3));
 
-
-                    } else {
+                    }
+                    else {
                         promotion = command;
                     }
 
@@ -56,6 +62,7 @@ public class ServerThread extends Thread{
                 model.setLastMove(newMove);
                 model.rookCastling(newMove);
 
+               
                 if (promotion != null){
                     model.pawnPromoted(newMove, promotion);
                 }else{

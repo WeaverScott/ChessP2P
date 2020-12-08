@@ -8,8 +8,8 @@ import javax.swing.*;
  * A class that provides the panel for the chess game so that the user
  * can see.
  *
- * @author Logan Jaglowski, Sarah, and Lauren
- * @version Winter 2019
+ * @author Christian Thompson, James Weitzmanm, Josh Hubbard, 
+ *         Lauren Vanderklok, & Scott Weaver 
  *********************************************************************/
 
 public class ChessPanel extends JPanel {
@@ -501,7 +501,8 @@ public class ChessPanel extends JPanel {
                                                             toColumn);
                                         }
                                         model.move(m);
-                                         // send move to other client
+
+                                        // send move to other client
                                         model.setLastMove(m);
                                         model.rookCastling(m);
                                         int promotion = model.pawnPromoted(m);
