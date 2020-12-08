@@ -108,7 +108,7 @@ public class ChessPanel extends JPanel {
             client = new Client(otherPort, otherPlayerIP);
             server = new Server(ThisPort, model, this);
 
-        }else{
+        }else if (pick == 2){
             player = Player.WHITE;
             ThisPort = this.askForThisPort();
             otherPort = this.askForOtherPort();
@@ -120,6 +120,15 @@ public class ChessPanel extends JPanel {
             client = new Client(otherPort, server.getOtherPlayerIP());
 
             this.loadGame();
+        }else if (pick == 3){
+            player = Player.BLACK;
+            otherPlayerIP = this.askForJoiningIP();
+            ThisPort = this.askForThisPort();
+            otherPort = this.askForOtherPort();
+
+            model = new ChessModel(player);
+            client = new Client(otherPort, otherPlayerIP);
+            server = new Server(ThisPort, model, this);
         }
 
 
@@ -372,7 +381,7 @@ public class ChessPanel extends JPanel {
     private int askStartNewGame(){
 
         //strings in this array correspond to the text of the buttons
-        Object[] buttons = {"Start New Game", "Join Existing Game", "Load Game From File"};
+        Object[] buttons = {"Start New Game", "Join Existing Game", "Load Game From File", "Join Loaded Game"};
 
 
         int pick = JOptionPane.showOptionDialog(null, "Pick which piece you would like to promote to: ",
