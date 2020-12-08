@@ -1,6 +1,8 @@
 package chess;
 
 import javax.swing.JOptionPane;
+import java.io.File;
+import java.io.PrintWriter;
 
 /**********************************************************************
  * A class that determines how the chess game functions, and gives the
@@ -333,6 +335,62 @@ public class ChessModel implements IChessModel {
     public void setPiece(int row, int column, IChessPiece piece) {
         board[row][column] = piece;
     }
+
+    public void saveGame(){
+        try {
+
+            String filename = "SavedGame.txt";
+            File file = new File(filename);
+
+            PrintWriter write = new PrintWriter(file);
+
+            String buffer = "";
+
+
+            for (int x = 0; x < numRows(); x++) {
+                for (int y = 0; y < numColumns(); y++) {
+                    if (pieceAt(x, y) == null) {
+                        buffer = buffer.concat("0" + x + y);
+                        buffer = buffer.concat(" ");
+                    } else if (pieceAt(x, y).type().equals("Pawn")) {
+                        buffer = buffer.concat("p" + x + y);
+                        buffer = buffer.concat(" ");
+
+                    } else if (pieceAt(x, y).type().equals("Rook")) {
+                        buffer = buffer.concat("r" + x + y);
+                        buffer = buffer.concat(" ");
+
+                    } else if (pieceAt(x, y).type().equals("Knight")) {
+                        buffer = buffer.concat("n" + x + y);
+                        buffer = buffer.concat(" ");
+
+                    } else if (pieceAt(x, y).type().equals("Bishop")) {
+                        buffer = buffer.concat("b" + x + y);
+                        buffer = buffer.concat(" ");
+
+                    } else if (pieceAt(x, y).type().equals("Queen")) {
+                        buffer = buffer.concat("q" + x + y);
+                        buffer = buffer.concat(" ");
+
+                    } else if (pieceAt(x, y).type().equals("King")) {
+                        buffer = buffer.concat("k" + x + y);
+                        buffer = buffer.concat(" ");
+
+                    }
+                }
+            }
+
+            write.print(buffer);
+            write.close();
+        }catch (Exception e){
+            System.err.println(e);
+        }
+    }
+
+
+
+
+
 
     /******************************************************************
      * A method that promotes pawns that achieve the opposing player's

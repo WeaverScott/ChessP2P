@@ -4,7 +4,7 @@ import java.awt.Dimension;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-import javax.swing.JFrame;
+import javax.swing.*;
 
 public class ChessGUI {
 
@@ -29,7 +29,19 @@ public class ChessGUI {
         frame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent windowEvent) {
-                System.out.println("newest version");
+
+                Object[] buttons = {"Yes", "No"};
+
+                int result = JOptionPane.showOptionDialog(null,
+                        "Do you want to save the game?", null,
+                        JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE,
+                        null, buttons, buttons[0]);
+
+                if (result == JOptionPane.YES_OPTION){
+                    panel.saveGame();
+
+                }
+
                 super.windowClosing(windowEvent);
                 panel.close();
                 System.exit(0);

@@ -29,9 +29,10 @@ public class ServerThread extends Thread{
                 String promotion = null;
                 boolean undo = false;
                 while(true){
+
                     String command = inFromClient.readUTF();
 
-                   // System.out.println(command);
+                    System.out.println("got: " + command);
 
                     if (command.equals("eof")){
                         break;
@@ -40,13 +41,12 @@ public class ServerThread extends Thread{
                     if (command.equals("undo")) {
                         undo = true;
                     } else {
+                        undo = false;
                         if (Character.isDigit(command.charAt(0))){
                             fromRow = Character.getNumericValue(command.charAt(0));
                             fromCol = Character.getNumericValue(command.charAt(1));
                             toRow = Character.getNumericValue(command.charAt(2));
                             toCol = Character.getNumericValue(command.charAt(3));
-
-
                         } else {
                             promotion = command;
                         }
@@ -73,15 +73,17 @@ public class ServerThread extends Thread{
                     }
                     //model.pawnPromoted(newMove);
                     model.setNextPlayer();      // change current player to next
+                    System.out.println(model.currentPlayer());
                 } else {
                     panel.undoStuff();
+                    System.out.println(model.currentPlayer());
                 }
                 panel.displayBoard();       // update board view
 
 
 
 
-
+                //undo = false;
 
 
 
