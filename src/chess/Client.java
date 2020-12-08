@@ -83,6 +83,18 @@ public class Client {
         }
     }
 
+    public void sendPiece(String location){
+        try {
+            DataOutputStream outToServer = new DataOutputStream(socket.getOutputStream());
+            outToServer.writeUTF(location);
+            outToServer.writeUTF("eof"); //lets server know message is over
+        } catch (IOException e){
+            System.err.println("Could not get output stream");
+            System.exit(-1);
+        }
+    }
+
+
     public void close(){
         try{
             DataOutputStream outToServer = new DataOutputStream(socket.getOutputStream());

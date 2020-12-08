@@ -2,6 +2,7 @@ package chess;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 import javax.swing.*;
 
 /**********************************************************************
@@ -437,7 +438,9 @@ public class ChessPanel extends JPanel {
 
     public void saveGame(){model.saveGame();}
 
-    public void loadGame(){model.loadBoard();}
+    public void loadGame(){ model.loadBoard();}
+
+
 
 
 

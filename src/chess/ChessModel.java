@@ -30,6 +30,10 @@ public class ChessModel implements IChessModel {
 
     private IChessPiece oldPiece;
 
+
+
+    //private Client client;
+
     /*****************************************************************
      * A constructor that creates the chess model.
      *****************************************************************/
@@ -37,6 +41,7 @@ public class ChessModel implements IChessModel {
         //creates the board and sets the first player to white
         board = new IChessPiece[8][8];
         player = color;
+
 
         /** Set white pieces */
         board[7][0] = new Rook(Player.WHITE);
@@ -75,6 +80,9 @@ public class ChessModel implements IChessModel {
         board[1][7] = new Pawn(Player.BLACK);
 
     }
+
+
+
 
 
 
