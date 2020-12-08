@@ -255,40 +255,40 @@ public class ChessPanel extends JPanel {
     /******************************************************************
      * A method that creates the images and adds them to the icons.
      *****************************************************************/
-    private void createIcons() {
-        // Sets the Image for white player pieces
-        wRook = new ImageIcon("./chess/wRook.png");
-        wBishop = new ImageIcon("./chess/wBishop.png");
-        wQueen = new ImageIcon("./chess/wQueen.png");
-        wKing = new ImageIcon("./chess/wKing.png");
-        wPawn = new ImageIcon("./chess/wPawn.png");
-        wKnight = new ImageIcon("./chess/wKnight.png");
-        //Sets the Image for black player pieces
-        bRook = new ImageIcon("./chess/bRook.png");
-        bBishop = new ImageIcon("./chess/bBishop.png");
-        bQueen = new ImageIcon("./chess/bQueen.png");
-        bKing = new ImageIcon("./chess/bKing.png");
-        bPawn = new ImageIcon("./chess/bPawn.png");
-        bKnight = new ImageIcon("./chess/bKnight.png");
-    }
-
-//    //for testing within intelliJ, delete later
 //    private void createIcons() {
 //        // Sets the Image for white player pieces
-//        wRook = new ImageIcon("./src/chess/wRook.png");
-//        wBishop = new ImageIcon("./src/chess/wBishop.png");
-//        wQueen = new ImageIcon("./src/chess/wQueen.png");
-//        wKing = new ImageIcon("./src/chess/wKing.png");
-//        wPawn = new ImageIcon("./src/chess/wPawn.png");
-//        wKnight = new ImageIcon("./src/chess/wKnight.png");
+//        wRook = new ImageIcon("./chess/wRook.png");
+//        wBishop = new ImageIcon("./chess/wBishop.png");
+//        wQueen = new ImageIcon("./chess/wQueen.png");
+//        wKing = new ImageIcon("./chess/wKing.png");
+//        wPawn = new ImageIcon("./chess/wPawn.png");
+//        wKnight = new ImageIcon("./chess/wKnight.png");
 //        //Sets the Image for black player pieces
-//        bRook = new ImageIcon("./src/chess/bRook.png");
-//        bBishop = new ImageIcon("./src/chess/bBishop.png");
-//        bQueen = new ImageIcon("./src/chess/bQueen.png");
-//        bKing = new ImageIcon("./src/chess/bKing.png");
-//        bPawn = new ImageIcon("./src/chess/bPawn.png");
-//        bKnight = new ImageIcon("./src/chess/bKnight.png");
+//        bRook = new ImageIcon("./chess/bRook.png");
+//        bBishop = new ImageIcon("./chess/bBishop.png");
+//        bQueen = new ImageIcon("./chess/bQueen.png");
+//        bKing = new ImageIcon("./chess/bKing.png");
+//        bPawn = new ImageIcon("./chess/bPawn.png");
+//        bKnight = new ImageIcon("./chess/bKnight.png");
 //    }
+
+//    //for testing within intelliJ, delete later
+    private void createIcons() {
+        // Sets the Image for white player pieces
+        wRook = new ImageIcon("./src/chess/wRook.png");
+        wBishop = new ImageIcon("./src/chess/wBishop.png");
+        wQueen = new ImageIcon("./src/chess/wQueen.png");
+        wKing = new ImageIcon("./src/chess/wKing.png");
+        wPawn = new ImageIcon("./src/chess/wPawn.png");
+        wKnight = new ImageIcon("./src/chess/wKnight.png");
+        //Sets the Image for black player pieces
+        bRook = new ImageIcon("./src/chess/bRook.png");
+        bBishop = new ImageIcon("./src/chess/bBishop.png");
+        bQueen = new ImageIcon("./src/chess/bQueen.png");
+        bKing = new ImageIcon("./src/chess/bKing.png");
+        bPawn = new ImageIcon("./src/chess/bPawn.png");
+        bKnight = new ImageIcon("./src/chess/bKnight.png");
+    }
 
     /******************************************************************
      * A method that updates the board.
@@ -422,7 +422,10 @@ public class ChessPanel extends JPanel {
         }
     }
 
-
+    public void close(){
+        server.close();
+        client.close();
+    }
 
 
     // inner class that represents action listener for buttons
