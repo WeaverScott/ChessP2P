@@ -6,7 +6,6 @@ package chess;
  * @author Christian Thompson, James Weitzmanm, Josh Hubbard, 
  *         Lauren Vanderklok, & Scott Weaver
  *********************************************************************/
-
 public class Rook extends ChessPiece {
 
     boolean moved = false;
@@ -111,5 +110,3 @@ public class Rook extends ChessPiece {
         return valid;
     }
 }
-
-//end of class

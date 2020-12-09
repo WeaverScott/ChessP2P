@@ -34,8 +34,8 @@ public class ChessGUI {
             @Override
             public void windowClosing(WindowEvent windowEvent) {
 
+                // asking whether or not the user wants to save the game
                 Object[] buttons = {"Yes", "No"};
-
                 int result = JOptionPane.showOptionDialog(null,
                         "Do you want to save the game?", null,
                         JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE,
@@ -45,6 +45,7 @@ public class ChessGUI {
                     panel.saveGame();
                 }
 
+                // closes the GUI and the thread connection
                 super.windowClosing(windowEvent);
                 panel.close();
                 System.exit(0);

@@ -123,5 +123,3 @@ public class King extends ChessPiece {
         return valid;
     }
 }
-
-//end of class

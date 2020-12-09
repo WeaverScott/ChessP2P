@@ -13,16 +13,25 @@ import java.util.ArrayList;
  *********************************************************************/
 public class ServerThread extends Thread{
 
+    /** The socket that the serverthread is connecting to */
     private Socket socket;
-    ChessModel model;
-    ChessPanel panel;       // panel to allow for board updating
 
+    /** Model of the game */
+    ChessModel model;
+
+    /** Panel added to allow for board updating */
+    ChessPanel panel; 
+
+    //initializes the server thread
     public ServerThread(Socket socket, ChessModel model, ChessPanel panel){
         this.socket = socket;
         this.model = model;
         this.panel = panel;
     }
 
+    /******************************************************************
+     * Main method for running the game 
+     *****************************************************************/
     public void run (){
 
         while(true){
@@ -37,6 +46,7 @@ public class ServerThread extends Thread{
                 boolean undo = false;
                 ArrayList<String> board = new ArrayList<String>();
                 boolean nextCommandIsLoading = false;
+                
                 while(true){
 
                     String command = inFromClient.readUTF();
@@ -68,9 +78,10 @@ public class ServerThread extends Thread{
                     if (nextCommandIsLoading){
                         model.setLoadedBoard(board);
                     }else {
-                        Move newMove = new Move(fromRow, fromCol, toRow, toCol);    // move from other client
+                        //move from other client
+                        Move newMove = new Move(fromRow, fromCol, toRow, toCol);    
 
-                        // make move happen on this client
+                        //make move happen on this client
                         panel.saveThisState();
                         model.move(newMove);
                         model.setLastMove(newMove);
@@ -79,17 +90,18 @@ public class ServerThread extends Thread{
                         if (promotion != null) {
                             model.pawnPromoted(newMove, promotion);
                         } else {
-                            model.pawnPromoted(newMove);
+                            model.move(newMove);
                         }
-                        //model.pawnPromoted(newMove);
-                        model.setNextPlayer();      // change current player to next
+                        //change current player to next
+                        model.setNextPlayer();      
                         System.out.println(model.currentPlayer());
                     }
                 } else {
                     panel.undoStuff();
                     System.out.println(model.currentPlayer());
                 }
-                panel.displayBoard();       // update board view
+                //update board view
+                panel.displayBoard();       
 
             }catch (SocketException e){
                 System.exit(0);
@@ -98,8 +110,6 @@ public class ServerThread extends Thread{
                 System.err.println(e);
                 System.exit(-1);
             }
-
         }
     }
-
 }

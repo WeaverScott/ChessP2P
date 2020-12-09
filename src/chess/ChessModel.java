@@ -21,14 +21,16 @@ public class ChessModel implements IChessModel {
     /** the current move */
     private Move currentMove = null;
 
-    /** The board */
+    /** the board */
     private IChessPiece[][] board;
 
-    /** The current player */
+    /** the current player */
     private Player player;
 
+    /** the player who gets to start */
     private boolean firstTurn = true;
 
+    /** the chess piece from a previous state */
     private IChessPiece oldPiece;
 
     /*****************************************************************
@@ -77,6 +79,9 @@ public class ChessModel implements IChessModel {
 
     }
 
+    /*****************************************************************
+     * A method that creates the chess model from a "load gmae".
+     *****************************************************************/
     public ChessModel(Player color, Boolean load) {
         //creates the board and sets the first player to white
         board = new IChessPiece[8][8];
@@ -90,6 +95,9 @@ public class ChessModel implements IChessModel {
 
     }
 
+    /*****************************************************************
+     * A method that removes pieces from the board
+     *****************************************************************/
     public void removeFromBoard(int row, int col){
         board[row][col] = null;
     }
@@ -174,12 +182,18 @@ public class ChessModel implements IChessModel {
         return valid;
     }
 
+    /*****************************************************************
+     * A method that saves the last move.
+     *****************************************************************/
     public void saveLastMove(Move m) {
         oldPiece = board[m.toRow][m.toColumn];
         board[m.toRow][m.toColumn] = board[m.fromRow][m.fromColumn];
         board[m.fromRow][m.fromColumn] = null;
     }
 
+    /*****************************************************************
+     * A method that undos the last move.
+     *****************************************************************/
     public void undoLastMove(Move m) {
         board[m.fromRow][m.fromColumn] = board[m.toRow][m.toColumn];
         board[m.toRow][m.toColumn] = oldPiece;
@@ -206,7 +220,7 @@ public class ChessModel implements IChessModel {
                         status.setMoveSuccessful(true);
                     }
                     //temporary pieces to test check conditions, same
-                    // as parameter
+                    //as parameter
                     IChessPiece toPiece = board[move.toRow]
                             [move.toColumn];
 
@@ -272,6 +286,7 @@ public class ChessModel implements IChessModel {
         boolean valid = false;
         int kingX = 0;
         int kingY = 0;
+
         //finds the position of the king
         for (int x = 0; x < numRows(); x++) {
             for (int y = 0; y < numColumns(); y++) {
@@ -348,6 +363,10 @@ public class ChessModel implements IChessModel {
         board[row][column] = piece;
     }
 
+    /*****************************************************************
+     * A method that saves the game as text file with the piece
+     * positions saved as a 4 character string.
+     *****************************************************************/
     public void saveGame(){
         try {
 
@@ -360,6 +379,7 @@ public class ChessModel implements IChessModel {
 
             char team = 'w';
 
+            //gets the desired information for each piece before being saved
             for (int x = 0; x < numRows(); x++) {
                 for (int y = 0; y < numColumns(); y++) {
                     if (pieceAt(x, y) != null) {
@@ -399,6 +419,7 @@ public class ChessModel implements IChessModel {
                 }
             }
 
+            //write said information to the buffer
             write.print(buffer);
             write.close();
         }catch (Exception e){
@@ -407,6 +428,9 @@ public class ChessModel implements IChessModel {
     }
 
 
+    /*****************************************************************
+    * A method that loads a saved game via a .txt file.
+    *****************************************************************/
     public ArrayList<String> loadBoard() throws IOException {
         BufferedReader reader;
         String piece;
@@ -421,6 +445,10 @@ public class ChessModel implements IChessModel {
             return listOfPieces;
     }
 
+    /*****************************************************************
+    * A method that is required in order to set the board
+    * when wanting to load a saved game.
+    *****************************************************************/
     public void setLoadedBoard(ArrayList <String> loadedBoard){
         for (int i = 0; i < loadedBoard.size(); i++) {
             int x = Character.getNumericValue(loadedBoard.get(i).charAt(1));
@@ -480,13 +508,11 @@ public class ChessModel implements IChessModel {
         }
     }
 
-
-
     /******************************************************************
-     * A method that promotes pawns that achieve the opposing player's
-     * back row.
-     * @param move the move (hopefully to the back row).
-     *****************************************************************/
+    * A method that promotes pawns that achieve the opposing player's
+    * back row.
+    * @param move the move (hopefully to the back row).
+    *****************************************************************/
     public int pawnPromoted(Move move) {
         if(board[move.toRow][move.toColumn] != null) {
             if (board[move.toRow][move.toColumn].type().equals("Pawn")
@@ -518,6 +544,12 @@ public class ChessModel implements IChessModel {
         return 5;
     }
 
+    /******************************************************************
+    * A method that promotes pawns that achieve the opposing player's
+    * back row.
+    * @param move the move (hopefully to the back row).
+    * @param promotion what the piece is being promoted to.
+    *****************************************************************/
     public void pawnPromoted(Move move, String promotion) {
         if(board[move.toRow][move.toColumn] != null) {
             if (board[move.toRow][move.toColumn].type().equals("Pawn")
@@ -563,8 +595,10 @@ public class ChessModel implements IChessModel {
         }
     }
 
-    // returns boolean value. true if the spot (row, col) can be taken
-    // by any white piece
+    /******************************************************************
+     * A method that returns boolean value. true if the spot (row, col) 
+     * can be taken by any white piece
+     *****************************************************************/
     public boolean isDangerous(int row, int col){
         for (int r = 0; r < numRows(); r++){
             for (int c = 0; c < numColumns(); c++){
@@ -575,7 +609,6 @@ public class ChessModel implements IChessModel {
                             return true;
                         }
                     }
-
                 }
             }
         }
@@ -685,5 +718,3 @@ public class ChessModel implements IChessModel {
         return lastMove;
     }
 }
-
-//end of class

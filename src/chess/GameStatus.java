@@ -85,6 +85,9 @@ public class GameStatus {
         this.movedIntoCheck = movedIntoCheck;
     }
 
+    /******************************************************************
+     * A default method to set all the parameters to false.
+     *****************************************************************/
     public GameStatus(){
         isComplete = false;
         moveSuccessful = false;

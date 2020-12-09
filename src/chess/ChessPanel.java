@@ -63,14 +63,22 @@ public class ChessPanel extends JPanel {
     /** The listener for the action listeners */
     private listener listener;
 
-    private boolean AIisActive = false;
-
+    /** The IP address of the other player */
     private String otherPlayerIP;
-    private int ThisPort; //port of this server process
-    private int otherPort; //port of connecting server process
+
+    /** Port of this server process */
+    private int ThisPort;
+
+    /** Port of connecting server process */
+    private int otherPort;
+
+    /** A player */
     private Player player;
 
+    /** The server that will be host the game */
     private Server server;
+
+    /** The client who will be playing with the server */
     private Client client;
 
     /******************************************************************
@@ -129,8 +137,6 @@ public class ChessPanel extends JPanel {
             client = new Client(otherPort, otherPlayerIP);
             server = new Server(ThisPort, model, this);
         }
-
-
 
         board = new JButton[model.numRows()][model.numColumns()];
         listener = new listener();
@@ -328,6 +334,7 @@ public class ChessPanel extends JPanel {
                 }
         }
 
+        //displays whose turn it is
         currentPlayerLabel.setText("Current player: " + model.
                 currentPlayer());
         if(model.isComplete())
@@ -336,6 +343,9 @@ public class ChessPanel extends JPanel {
         repaint();
     }
 
+    /******************************************************************
+     * A method that asks what type of game is being started.
+     *****************************************************************/
     private int askStartNewGame(){
 
         //strings in this array correspond to the text of the buttons
@@ -352,20 +362,33 @@ public class ChessPanel extends JPanel {
 
     }
 
+
+    /******************************************************************
+     * A method that asks what the IP address of the game being joined.
+     *****************************************************************/
     private String askForJoiningIP(){
 
        return JOptionPane.showInputDialog("Enter the IP address of the game");
 
     }
 
+    /******************************************************************
+     * A method that asks for the port that will be sent to the server.
+     *****************************************************************/
     private int askForThisPort(){
         return Integer.parseInt(JOptionPane.showInputDialog("Enter the port number of your local game"));
     }
 
+    /******************************************************************
+     * A method that asks for the port that is attached to the server.
+     *****************************************************************/
     private int askForOtherPort(){
         return Integer.parseInt(JOptionPane.showInputDialog("Enter the port number of the game you are joining"));
     }
 
+    /******************************************************************
+     * A method that undos last moves.
+     *****************************************************************/
     public void undoStuff() {
         model = state.loadState();
         if (!state.checkIfBeginningModel())
@@ -373,20 +396,31 @@ public class ChessPanel extends JPanel {
         displayBoard();
     }
 
+    /******************************************************************
+     * A method that saves the state of the game.
+     *****************************************************************/
     public void saveThisState() {
         state.saveState(model);
     }
 
+    /******************************************************************
+     * A method that closes the game for both the server & the client.
+     *****************************************************************/
     public void close(){
         server.close();
         client.close();
     }
 
-
+    /******************************************************************
+     * A method that saves the game.
+     *****************************************************************/
     public void saveGame(){
         model.saveGame();
     }
 
+    /******************************************************************
+     * A method that loads the game.
+     *****************************************************************/
     public void loadGame(){
         try{
             model.setLoadedBoard(model.loadBoard());
@@ -401,7 +435,8 @@ public class ChessPanel extends JPanel {
         public void actionPerformed(ActionEvent event) {
             for (int r = 0; r < model.numRows(); r++) {
                 for (int c = 0; c < model.numColumns(); c++) {
-                    if (player == model.currentPlayer()) {      // can only make a move when it is this client's turn
+                    // can only make a move when it is this client's turn
+                    if (player == model.currentPlayer()) {     
                         if (board[r][c] == event.getSource()) {
                             if (firstTurnFlag) {
                                 fromRow = r;
@@ -420,11 +455,13 @@ public class ChessPanel extends JPanel {
                                 if (model.isComplete()) {
                                     break;
                                 }
+
                                 //when move is into check
                                 if (model.isValidMove(m).isMovedIntoCheck()) {
                                     JOptionPane.showMessageDialog(null,
                                             "Cannot move into check");
                                 }
+
                                 //when move puts player into check
                                 if (model.isValidMove(m).isInCheck()) {
                                     JOptionPane.showMessageDialog(null,
@@ -435,32 +472,6 @@ public class ChessPanel extends JPanel {
                                 //insert ifs and dialog boxes
                                 if ((model.isValidMove(m)
                                         .isMoveSuccessful())) {
-                                    if (AIisActive) {
-                                        state.saveState(model);
-                                        if (model.isEnPassant(model.
-                                                getCurrentMove(), model.
-                                                getLastMove())) {
-                                            model.removeFromBoard(model.
-                                                            getLastMove().toRow,
-                                                    model.getLastMove().
-                                                            toColumn);
-                                        }
-                                        model.move(m);
-
-                                        model.setLastMove(m);
-                                        model.rookCastling(m);
-                                        model.pawnPromoted(m);
-                                        if (model.isComplete()) {
-                                            JOptionPane.showMessageDialog(
-                                                    null, "Checkmate!");
-                                        } else if (model.inCheck(Player.BLACK)) {
-                                            JOptionPane.showMessageDialog(
-                                                    null, "BLACK" +
-                                                            " is in check");
-                                        }
-                                        model.setLastMove(m);
-                                        displayBoard();
-                                    } else {
                                         state.saveState(model);
                                         if (model.isEnPassant(model.
                                                 getCurrentMove(), model.
@@ -490,7 +501,6 @@ public class ChessPanel extends JPanel {
 
                                         model.setNextPlayer();
                                         displayBoard();
-                                    }
 
                                     displayBoard();
 

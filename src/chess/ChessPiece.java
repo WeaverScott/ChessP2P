@@ -79,5 +79,3 @@ public abstract class ChessPiece implements IChessPiece {
         return valid;
     }
 }
-
-//end of class

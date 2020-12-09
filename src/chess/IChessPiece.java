@@ -1,7 +1,7 @@
 package chess;
 
 /**********************************************************************
- * A class that  
+ * A class that acts as the interface for ChessPiece.
  *
  * @author Christian Thompson, James Weitzmanm, Josh Hubbard, 
  *         Lauren Vanderklok, & Scott Weaver

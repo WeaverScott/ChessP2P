@@ -94,5 +94,3 @@ public class Bishop extends ChessPiece {
         return valid;
     }
 }
-
-//end of class

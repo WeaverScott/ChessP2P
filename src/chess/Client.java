@@ -14,11 +14,16 @@ import java.util.ArrayList;
  *********************************************************************/
 public class Client {
 
+    /** The socket that the client is connecting to*/
     Socket socket;
 
+    /** The port that the client is sending information from */
     int port;
 
-    //version of the constructor for when were joining a game, the only difference is the type of IPaddr
+    /******************************************************************
+     * A version of the constructor for when were were joining a game, 
+     * the only difference is the type of IPaddr
+     *****************************************************************/
     public Client (int port, String IPaddr){
         this.port = port;
 
@@ -31,7 +36,9 @@ public class Client {
 
     }
 
-    //version of the constructor for when were starting a new game
+    /******************************************************************
+     * A version of the constructor for when were starting a new game
+     *****************************************************************/
     public Client (int port, InetAddress IPaddr){
         this.port = port;
 
@@ -45,14 +52,16 @@ public class Client {
 
     }
 
-    //call this in ChessPanel to send the local player's move to the other player
+    /******************************************************************
+     * A method called in ChessPanel to send the local player's move 
+     * to the other player.
+     *****************************************************************/
     public void sendToOtherPlayer(int fromRow, int fromColumn, int toRow, int toColumn){
 
         String moveOut = Integer.toString(fromRow) + Integer.toString(fromColumn) + Integer.toString(toRow) + Integer.toString(toColumn);
 
         try {
             DataOutputStream outToServer = new DataOutputStream(socket.getOutputStream());
-            //outToServer.writeUTF("move");
             outToServer.writeUTF(moveOut);
             outToServer.writeUTF("eof"); //lets server know message is over
         } catch (IOException e){
@@ -61,11 +70,14 @@ public class Client {
         }
     }
 
+    /******************************************************************
+     * A method called in ChessPanel to send the local player's move 
+     * and choice of promotion to the other player.
+     *****************************************************************/
     public void sendToOtherPlayer(int fromRow, int fromColumn, int toRow, int toColumn, String promotion){
         String moveOut = Integer.toString(fromRow) + Integer.toString(fromColumn) + Integer.toString(toRow) + Integer.toString(toColumn);
         try {
             DataOutputStream outToServer = new DataOutputStream(socket.getOutputStream());
-            //outToServer.writeUTF("promotion");
             outToServer.writeUTF(moveOut);
             outToServer.writeUTF(promotion);
             outToServer.writeUTF("eof"); //lets server know message is over
@@ -76,11 +88,13 @@ public class Client {
 
     }
 
-    public void sendToOtherPlayer() {	// used for undoing moves
+    /******************************************************************
+     * A method used for undoing moves.
+     *****************************************************************/
+    public void sendToOtherPlayer() {
 
         try {
             DataOutputStream outToServer = new DataOutputStream(socket.getOutputStream());
-            //outToServer.writeUTF("promotion");
             outToServer.writeUTF("undo");
             outToServer.writeUTF("eof"); //lets server know message is over
         } catch (IOException e){
@@ -88,7 +102,10 @@ public class Client {
             System.exit(-1);
         }
     }
-
+ 
+     /******************************************************************
+     * A method that sends the pieces to the board.
+     *****************************************************************/
     public void sendPiece(ArrayList <String> board){
         try {
             DataOutputStream outToServer = new DataOutputStream(socket.getOutputStream());
@@ -104,7 +121,9 @@ public class Client {
         }
     }
 
-
+    /******************************************************************
+     * A method that closes the game for the client.
+     *****************************************************************/
     public void close(){
         try{
             DataOutputStream outToServer = new DataOutputStream(socket.getOutputStream());

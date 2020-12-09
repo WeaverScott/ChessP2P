@@ -6,7 +6,6 @@ package chess;
  * @author Christian Thompson, James Weitzmanm, Josh Hubbard, 
  *         Lauren Vanderklok, & Scott Weaver
  *********************************************************************/
-
 public class Queen extends ChessPiece {
 
     /******************************************************************
@@ -43,5 +42,3 @@ public class Queen extends ChessPiece {
                 (move, board));
     }
 }
-
-//end of class
