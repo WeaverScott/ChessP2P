@@ -353,8 +353,10 @@ public class ChessModel implements IChessModel {
 
             for (int x = 0; x < numRows(); x++) {
                 for (int y = 0; y < numColumns(); y++) {
-                    if (pieceAt(x, y).player() == Player.BLACK) {
-                        team = 'b';
+                    if (pieceAt(x, y) != null) {
+                        if (pieceAt(x, y).player() == Player.BLACK) {
+                            team = 'b';
+                        }
                     }
                     if (pieceAt(x, y) == null) {
                         buffer = buffer.concat("0" + x + y + team);
