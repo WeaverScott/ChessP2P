@@ -78,6 +78,9 @@ public class ChessModel implements IChessModel {
 
     }
 
+    // public ChessModel(Player color, String test) {
+    //     player = color;
+    // }
 
 
     public void removeFromBoard(int row, int col){
@@ -348,7 +351,7 @@ public class ChessModel implements IChessModel {
 
             String buffer = "";
 
-            char team;
+            char team = 's';
 
             for (int x = 0; x < numRows(); x++) {
                 for (int y = 0; y < numColumns(); y++) {
