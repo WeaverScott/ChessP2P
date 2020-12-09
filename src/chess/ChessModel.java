@@ -2,6 +2,10 @@ package chess;
 
 import javax.swing.JOptionPane;
 
+import java.io.*;
+import java.util.ArrayList;
+import java.util.StringTokenizer;
+
 /**********************************************************************
  * A class that determines how the chess game functions, and gives the
  * blueprints to how the panel will work.
@@ -71,6 +75,19 @@ public class ChessModel implements IChessModel {
         board[1][5] = new Pawn(Player.BLACK);
         board[1][6] = new Pawn(Player.BLACK);
         board[1][7] = new Pawn(Player.BLACK);
+
+    }
+
+    public ChessModel(Player color, Boolean load) {
+        //creates the board and sets the first player to white
+        board = new IChessPiece[8][8];
+        player = color;
+
+        try {
+            setLoadedBoard(loadBoard());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -333,6 +350,142 @@ public class ChessModel implements IChessModel {
     public void setPiece(int row, int column, IChessPiece piece) {
         board[row][column] = piece;
     }
+
+    public void saveGame(){
+        try {
+
+            String filename = "SavedGame.txt";
+            File file = new File(filename);
+
+            PrintWriter write = new PrintWriter(file);
+
+            String buffer = "";
+
+            char team = 'w';
+
+            for (int x = 0; x < numRows(); x++) {
+                for (int y = 0; y < numColumns(); y++) {
+                    if (pieceAt(x, y) != null) {
+                        if (pieceAt(x, y).player().equals(Player.BLACK)) {
+                            team = 'b';
+                        } else  {
+                            team = 'w';
+                        }
+                    }
+                    if (pieceAt(x, y) == null) {
+                        buffer = buffer.concat("0" + x + y + team);
+                        buffer = buffer.concat(" ");
+                    } else if (pieceAt(x, y).type().equals("Pawn")) {
+                        buffer = buffer.concat("p" + x + y + team);
+                        buffer = buffer.concat(" ");
+
+                    } else if (pieceAt(x, y).type().equals("Rook")) {
+                        buffer = buffer.concat("r" + x + y + team);
+                        buffer = buffer.concat(" ");
+
+                    } else if (pieceAt(x, y).type().equals("Knight")) {
+                        buffer = buffer.concat("n" + x + y + team);
+                        buffer = buffer.concat(" ");
+
+                    } else if (pieceAt(x, y).type().equals("Bishop")) {
+                        buffer = buffer.concat("b" + x + y + team);
+                        buffer = buffer.concat(" ");
+
+                    } else if (pieceAt(x, y).type().equals("Queen")) {
+                        buffer = buffer.concat("q" + x + y + team);
+                        buffer = buffer.concat(" ");
+
+                    } else if (pieceAt(x, y).type().equals("King")) {
+                        buffer = buffer.concat("k" + x + y + team);
+                        buffer = buffer.concat(" ");
+
+                    }
+                }
+            }
+
+            write.print(buffer);
+            write.close();
+        }catch (Exception e){
+            System.err.println(e);
+        }
+    }
+
+
+    public ArrayList<String> loadBoard() throws IOException {
+        BufferedReader reader;
+        String piece;
+        ArrayList<String> listOfPieces = new ArrayList<String>();
+
+            reader = new BufferedReader(new FileReader("SavedGame.txt"));
+            String line = reader.readLine();
+            StringTokenizer tokens = new StringTokenizer(line);
+            while (tokens.hasMoreTokens()) {
+                listOfPieces.add(tokens.nextToken(" "));
+            }
+            return listOfPieces;
+
+    }
+
+    public void setLoadedBoard(ArrayList <String> loadedBoard){
+        for (int i = 0; i < loadedBoard.size(); i++) {
+            int x = Character.getNumericValue(loadedBoard.get(i).charAt(1));
+            int y = Character.getNumericValue(loadedBoard.get(i).charAt(2));
+            char team = loadedBoard.get(i).charAt(3);
+            if (loadedBoard.get(i).charAt(0) == 'p') {
+                if (team == 'b') {
+                    setPiece(x, y, new Pawn(Player.BLACK));
+                }
+                else {
+                    setPiece(x, y, new Pawn(Player.WHITE));
+                }
+            }
+            if (loadedBoard.get(i).charAt(0) == 'r') {
+                if (team == 'b') {
+                    setPiece(x, y, new Rook(Player.BLACK));
+                }
+                else {
+                    setPiece(x, y, new Rook(Player.WHITE));
+                }
+            }
+            if (loadedBoard.get(i).charAt(0) == 'n') {
+                if (team == 'b') {
+                    setPiece(x, y, new Knight(Player.BLACK));
+                }
+                else {
+                    setPiece(x, y, new Knight(Player.WHITE));
+                }
+            }
+            if (loadedBoard.get(i).charAt(0) == 'b') {
+                if (team == 'b') {
+                    setPiece(x, y, new Bishop(Player.BLACK));
+                }
+                else {
+                    setPiece(x, y, new Bishop(Player.WHITE));
+                }
+            }
+            if (loadedBoard.get(i).charAt(0) == 'q') {
+                if (team == 'b') {
+                    setPiece(x, y, new Queen(Player.BLACK));
+                }
+                else {
+                    setPiece(x, y, new Queen(Player.WHITE));
+                }
+            }
+            if (loadedBoard.get(i).charAt(0) == 'k') {
+                if (team == 'b') {
+                    setPiece(x, y, new King(Player.BLACK));
+                }
+                else {
+                    setPiece(x, y, new King(Player.WHITE));
+                }
+            }
+            if (loadedBoard.get(i).charAt(0) == '0') {
+                setPiece(x, y, null);
+            }
+        }
+    }
+
+
 
     /******************************************************************
      * A method that promotes pawns that achieve the opposing player's

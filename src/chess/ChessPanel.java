@@ -2,6 +2,8 @@ package chess;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
+import java.util.ArrayList;
 import javax.swing.*;
 
 /**********************************************************************
@@ -84,7 +86,9 @@ public class ChessPanel extends JPanel {
      *****************************************************************/
     public ChessPanel() {
 
-        if(this.askStartNewGame()){
+        int pick = this.askStartNewGame();
+
+        if(pick == 0){
             player = Player.WHITE;
             ThisPort = this.askForThisPort();
             otherPort = this.askForOtherPort();
@@ -95,7 +99,7 @@ public class ChessPanel extends JPanel {
             //server tells client ip of joining
             client = new Client(otherPort, server.getOtherPlayerIP());
 
-        } else{
+        } else if (pick == 1){
             player = Player.BLACK;
             otherPlayerIP = this.askForJoiningIP();
             ThisPort = this.askForThisPort();
@@ -105,14 +109,34 @@ public class ChessPanel extends JPanel {
             client = new Client(otherPort, otherPlayerIP);
             server = new Server(ThisPort, model, this);
 
+        }else if (pick == 2){
+            player = Player.WHITE;
+            ThisPort = this.askForThisPort();
+            otherPort = this.askForOtherPort();
+
+            model = new ChessModel(player, true);
+            this.loadGame();
+            server = new Server(ThisPort, model, this);
+
+            //server tells client ip of joining
+            client = new Client(otherPort, server.getOtherPlayerIP());
+
+
+        }else if (pick == 3){
+            player = Player.BLACK;
+            otherPlayerIP = this.askForJoiningIP();
+            ThisPort = this.askForThisPort();
+            otherPort = this.askForOtherPort();
+
+            model = new ChessModel(player);
+            try {
+                model.setLoadedBoard(model.loadBoard());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            client = new Client(otherPort, otherPlayerIP);
+            server = new Server(ThisPort, model, this);
         }
-
-
-
-
-
-
-
 
 
 
@@ -120,13 +144,7 @@ public class ChessPanel extends JPanel {
         listener = new listener();
         createIcons();
 
-
-
-
         model.setPlayer(Player.WHITE);  // make it so WHITE is always first player
-
-
-
 
 
        // this.askForAI();
@@ -254,40 +272,40 @@ public class ChessPanel extends JPanel {
     /******************************************************************
      * A method that creates the images and adds them to the icons.
      *****************************************************************/
-    private void createIcons() {
-        // Sets the Image for white player pieces
-        wRook = new ImageIcon("./chess/wRook.png");
-        wBishop = new ImageIcon("./chess/wBishop.png");
-        wQueen = new ImageIcon("./chess/wQueen.png");
-        wKing = new ImageIcon("./chess/wKing.png");
-        wPawn = new ImageIcon("./chess/wPawn.png");
-        wKnight = new ImageIcon("./chess/wKnight.png");
-        //Sets the Image for black player pieces
-        bRook = new ImageIcon("./chess/bRook.png");
-        bBishop = new ImageIcon("./chess/bBishop.png");
-        bQueen = new ImageIcon("./chess/bQueen.png");
-        bKing = new ImageIcon("./chess/bKing.png");
-        bPawn = new ImageIcon("./chess/bPawn.png");
-        bKnight = new ImageIcon("./chess/bKnight.png");
-    }
+   private void createIcons() {
+       // Sets the Image for white player pieces
+       wRook = new ImageIcon("./chess/wRook.png");
+       wBishop = new ImageIcon("./chess/wBishop.png");
+       wQueen = new ImageIcon("./chess/wQueen.png");
+       wKing = new ImageIcon("./chess/wKing.png");
+       wPawn = new ImageIcon("./chess/wPawn.png");
+       wKnight = new ImageIcon("./chess/wKnight.png");
+       //Sets the Image for black player pieces
+       bRook = new ImageIcon("./chess/bRook.png");
+       bBishop = new ImageIcon("./chess/bBishop.png");
+       bQueen = new ImageIcon("./chess/bQueen.png");
+       bKing = new ImageIcon("./chess/bKing.png");
+       bPawn = new ImageIcon("./chess/bPawn.png");
+       bKnight = new ImageIcon("./chess/bKnight.png");
+   }
 
 ////    //for testing within intelliJ, delete later
-//    private void createIcons() {
-//        // Sets the Image for white player pieces
-//        wRook = new ImageIcon("./src/chess/wRook.png");
-//        wBishop = new ImageIcon("./src/chess/wBishop.png");
-//        wQueen = new ImageIcon("./src/chess/wQueen.png");
-//        wKing = new ImageIcon("./src/chess/wKing.png");
-//        wPawn = new ImageIcon("./src/chess/wPawn.png");
-//        wKnight = new ImageIcon("./src/chess/wKnight.png");
-//        //Sets the Image for black player pieces
-//        bRook = new ImageIcon("./src/chess/bRook.png");
-//        bBishop = new ImageIcon("./src/chess/bBishop.png");
-//        bQueen = new ImageIcon("./src/chess/bQueen.png");
-//        bKing = new ImageIcon("./src/chess/bKing.png");
-//        bPawn = new ImageIcon("./src/chess/bPawn.png");
-//        bKnight = new ImageIcon("./src/chess/bKnight.png");
-//    }
+    // private void createIcons() {
+    //     // Sets the Image for white player pieces
+    //     wRook = new ImageIcon("./src/chess/wRook.png");
+    //     wBishop = new ImageIcon("./src/chess/wBishop.png");
+    //     wQueen = new ImageIcon("./src/chess/wQueen.png");
+    //     wKing = new ImageIcon("./src/chess/wKing.png");
+    //     wPawn = new ImageIcon("./src/chess/wPawn.png");
+    //     wKnight = new ImageIcon("./src/chess/wKnight.png");
+    //     //Sets the Image for black player pieces
+    //     bRook = new ImageIcon("./src/chess/bRook.png");
+    //     bBishop = new ImageIcon("./src/chess/bBishop.png");
+    //     bQueen = new ImageIcon("./src/chess/bQueen.png");
+    //     bKing = new ImageIcon("./src/chess/bKing.png");
+    //     bPawn = new ImageIcon("./src/chess/bPawn.png");
+    //     bKnight = new ImageIcon("./src/chess/bKnight.png");
+    // }
 
     /******************************************************************
      * A method that updates the board.
@@ -367,23 +385,19 @@ public class ChessPanel extends JPanel {
         }
     }
 
-    private boolean askStartNewGame(){
+    private int askStartNewGame(){
 
         //strings in this array correspond to the text of the buttons
-        Object[] buttons = {"Start New Game", "Join Existing Game"};
+        Object[] buttons = {"Start New Game", "Join Existing Game", "Load Game From File", "Join Loaded Game"};
 
-        // this is the overloaded constructor of the JOptionPane,
-        // for custom buttons
-        int result = JOptionPane.showOptionDialog(null,
-                "Start or join game?", null,
-                JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE,
-                null, buttons, buttons[0]);
 
-        if (result == JOptionPane.YES_OPTION){
-             return true;
-        }else{
-            return false;
-        }
+        int pick = JOptionPane.showOptionDialog(null, "Pick which piece you would like to promote to: ",
+                "", JOptionPane.DEFAULT_OPTION,
+                JOptionPane.INFORMATION_MESSAGE, null, buttons,
+                buttons[0]);
+
+
+        return pick;
 
     }
 
@@ -425,6 +439,7 @@ public class ChessPanel extends JPanel {
         model = state.loadState();
         if (!state.checkIfBeginningModel())
             state.incrementState();
+        displayBoard();
     }
 
     public void saveThisState() {
@@ -435,6 +450,21 @@ public class ChessPanel extends JPanel {
         server.close();
         client.close();
     }
+
+
+    public void saveGame(){model.saveGame();}
+
+    public void loadGame(){
+        try{
+            model.setLoadedBoard(model.loadBoard());
+            client.sendPiece(model.loadBoard());
+        }catch (Exception e){
+            System.err.println(e);
+        }
+    }
+
+
+
 
 
     // inner class that represents action listener for buttons
