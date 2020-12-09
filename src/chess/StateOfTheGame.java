@@ -1,14 +1,13 @@
 package chess;
 
+import java.util.ArrayList;
+
 /**********************************************************************
  * A class that saves and loads states of the game.
  *
- * @author Logan Jaglowski, Sarah, and Lauren
- * @version Winter 2019
+ * @author Christian Thompson, James Weitzmanm, Josh Hubbard, 
+ *         Lauren Vanderklok, & Scott Weaver
  *********************************************************************/
-
-import java.util.ArrayList;
-
 public class StateOfTheGame {
     /** An arraylist of ChessModel objects */
     private ArrayList<ChessModel> state;

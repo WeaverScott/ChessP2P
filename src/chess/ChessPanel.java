@@ -3,17 +3,15 @@ package chess;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
-import java.util.ArrayList;
 import javax.swing.*;
 
 /**********************************************************************
  * A class that provides the panel for the chess game so that the user
  * can see.
  *
- * @author Logan Jaglowski, Sarah, and Lauren
- * @version Winter 2019
+ * @author Christian Thompson, James Weitzmanm, Josh Hubbard, 
+ *         Lauren Vanderklok, & Scott Weaver 
  *********************************************************************/
-
 public class ChessPanel extends JPanel {
 
     /** Used for saving and loading games */
@@ -55,12 +53,6 @@ public class ChessPanel extends JPanel {
 
     /** The column being moved to */
     private int toCol;
-
-    /** The fromColumn saved for undo */
-    private int undoSaveFromCol;
-
-    /** The toColumn saved for undo */
-    private int undoSaveToCol;
 
     /** A label that shows whose turn it is */
     private JLabel currentPlayerLabel;
@@ -145,11 +137,6 @@ public class ChessPanel extends JPanel {
         createIcons();
 
         model.setPlayer(Player.WHITE);  // make it so WHITE is always first player
-
-
-       // this.askForAI();
-        //generates message at start of game prompting
-        // the user for the number of players
 
         JPanel boardpanel = new JPanel();
         JPanel buttonpanel = new JPanel();
@@ -289,24 +276,6 @@ public class ChessPanel extends JPanel {
        bKnight = new ImageIcon("./chess/bKnight.png");
    }
 
-////    //for testing within intelliJ, delete later
-    // private void createIcons() {
-    //     // Sets the Image for white player pieces
-    //     wRook = new ImageIcon("./src/chess/wRook.png");
-    //     wBishop = new ImageIcon("./src/chess/wBishop.png");
-    //     wQueen = new ImageIcon("./src/chess/wQueen.png");
-    //     wKing = new ImageIcon("./src/chess/wKing.png");
-    //     wPawn = new ImageIcon("./src/chess/wPawn.png");
-    //     wKnight = new ImageIcon("./src/chess/wKnight.png");
-    //     //Sets the Image for black player pieces
-    //     bRook = new ImageIcon("./src/chess/bRook.png");
-    //     bBishop = new ImageIcon("./src/chess/bBishop.png");
-    //     bQueen = new ImageIcon("./src/chess/bQueen.png");
-    //     bKing = new ImageIcon("./src/chess/bKing.png");
-    //     bPawn = new ImageIcon("./src/chess/bPawn.png");
-    //     bKnight = new ImageIcon("./src/chess/bKnight.png");
-    // }
-
     /******************************************************************
      * A method that updates the board.
      *****************************************************************/
@@ -366,24 +335,6 @@ public class ChessPanel extends JPanel {
                     "Checkmate!");
         repaint();
     }
-    public void askForAI(){
-
-        //strings in this array correspond to the text of the buttons
-        Object[] buttons = {"One Player", "Two Players"};
-
-        // this is the overloaded constructor of the JOptionPane,
-        // for custom buttons
-        int result = JOptionPane.showOptionDialog(null,
-                "One player or two?", null,
-                JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE,
-                null, buttons, buttons[0]);
-
-        if (result == JOptionPane.YES_OPTION){
-            AIisActive = true;
-        }else{
-            AIisActive = false;
-        }
-    }
 
     private int askStartNewGame(){
 
@@ -415,26 +366,6 @@ public class ChessPanel extends JPanel {
         return Integer.parseInt(JOptionPane.showInputDialog("Enter the port number of the game you are joining"));
     }
 
-    private Player askForColor(){
-        //strings in this array correspond to the text of the buttons
-        // first is yes option second is no
-        Object[] buttons = {"Black", "White"};
-
-        // this is the overloaded constructor of the JOptionPane,
-        // for custom buttons
-        int result = JOptionPane.showOptionDialog(null,
-                "What color do you want to play?", null,
-                JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE,
-                null, buttons, buttons[0]);
-
-        if (result == JOptionPane.YES_OPTION){
-            return Player.BLACK;
-
-        }else{
-            return Player.WHITE;
-        }
-    }
-
     public void undoStuff() {
         model = state.loadState();
         if (!state.checkIfBeginningModel())
@@ -452,7 +383,9 @@ public class ChessPanel extends JPanel {
     }
 
 
-    public void saveGame(){model.saveGame();}
+    public void saveGame(){
+        model.saveGame();
+    }
 
     public void loadGame(){
         try{
@@ -462,10 +395,6 @@ public class ChessPanel extends JPanel {
             System.err.println(e);
         }
     }
-
-
-
-
 
     // inner class that represents action listener for buttons
     private class listener implements ActionListener {
@@ -529,7 +458,6 @@ public class ChessPanel extends JPanel {
                                                     null, "BLACK" +
                                                             " is in check");
                                         }
-                                        model.AI();
                                         model.setLastMove(m);
                                         displayBoard();
                                     } else {
@@ -585,4 +513,4 @@ public class ChessPanel extends JPanel {
             }
         }
     }
-    }
+}

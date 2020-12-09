@@ -4,8 +4,8 @@ package chess;
  * A class that stores conditions about game, changed when pieces move.
  * Changes in booleans should result in JOptionPanes being triggered.
  * 
- * @author Logan Jaglowski, Sarah, and Lauren
- * @version Winter 2019
+ * @author Christian Thompson, James Weitzmanm, Josh Hubbard, 
+ *         Lauren Vanderklok, & Scott Weaver
  *********************************************************************/
 public class GameStatus {
 

@@ -3,10 +3,9 @@ package chess;
 /**********************************************************************
  * A class that determines the correct King values.
  *
- * @author Logan Jaglowski, Sarah, and Lauren
- * @version Winter 2019
+ * @author Christian Thompson, James Weitzmanm, Josh Hubbard, 
+ *         Lauren Vanderklok, & Scott Weaver
  *********************************************************************/
-
 public class King extends ChessPiece {
 
     /******************************************************************

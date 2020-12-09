@@ -1,8 +1,13 @@
 package chess;
 
-//cannot edit this class
-
+/**********************************************************************
+ * A class that gets called to move the chess pieces. 
+ *
+ * @author Christian Thompson, James Weitzmanm, Josh Hubbard, 
+ *         Lauren Vanderklok, & Scott Weaver
+ *********************************************************************/
 public class Move {
+    
     /** Rows and columns being moved from and to */
     public int fromRow, fromColumn, toRow, toColumn;
 
@@ -36,5 +41,3 @@ public class Move {
                 + ", toRow=" + toRow + ", toColumn=" + toColumn + "]";
     }
 }
-
-//end of class

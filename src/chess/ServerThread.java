@@ -5,11 +5,17 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.util.ArrayList;
 
+/**********************************************************************
+ * A class that send information to and from the server.
+ *
+ * @author Christian Thompson, James Weitzmanm, Josh Hubbard, 
+ *         Lauren Vanderklok, & Scott Weaver 
+ *********************************************************************/
 public class ServerThread extends Thread{
 
     private Socket socket;
     ChessModel model;
-    ChessPanel panel;       // added panel to allow for board updating
+    ChessPanel panel;       // panel to allow for board updating
 
     public ServerThread(Socket socket, ChessModel model, ChessPanel panel){
         this.socket = socket;
@@ -31,7 +37,6 @@ public class ServerThread extends Thread{
                 boolean undo = false;
                 ArrayList<String> board = new ArrayList<String>();
                 boolean nextCommandIsLoading = false;
-               // boolean loadingBoard = false;
                 while(true){
 
                     String command = inFromClient.readUTF();
@@ -42,14 +47,12 @@ public class ServerThread extends Thread{
                         break;
                     }else if (nextCommandIsLoading){
                         board.add(command);
-                        //nextCommandIsLoading = false;
-                    }else if (command.equals("undo")) {
+                    }else if (command.equals("undo")) { //undo has been opted out of
                         undo = true;
                     }
                     else if (command.equals("loading")){
                         nextCommandIsLoading = true;
                     } else {
-                     //   undo = false;
                         if (Character.isDigit(command.charAt(0))){
                             fromRow = Character.getNumericValue(command.charAt(0));
                             fromCol = Character.getNumericValue(command.charAt(1));
@@ -59,9 +62,6 @@ public class ServerThread extends Thread{
                             promotion = command;
                         }
                     }
-
-
-
                 }
 
                 if (!undo) {
@@ -75,7 +75,6 @@ public class ServerThread extends Thread{
                         model.move(newMove);
                         model.setLastMove(newMove);
                         model.rookCastling(newMove);
-
 
                         if (promotion != null) {
                             model.pawnPromoted(newMove, promotion);
@@ -91,14 +90,6 @@ public class ServerThread extends Thread{
                     System.out.println(model.currentPlayer());
                 }
                 panel.displayBoard();       // update board view
-
-
-
-
-                //undo = false;
-
-
-
 
             }catch (SocketException e){
                 System.exit(0);

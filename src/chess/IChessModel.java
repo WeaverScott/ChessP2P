@@ -1,5 +1,11 @@
 package chess;
 
+/**********************************************************************
+ * A class that  
+ *
+ * @author Christian Thompson, James Weitzmanm, Josh Hubbard, 
+ *         Lauren Vanderklok, & Scott Weaver
+ *********************************************************************/
 public interface IChessModel {
 
     /******************************************************************

@@ -4,13 +4,18 @@ import java.io.*;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.StringTokenizer;
 
+/**********************************************************************
+ * A class that acts as the server. 
+ *
+ * @author Christian Thompson, James Weitzmanm, Josh Hubbard, 
+ *         Lauren Vanderklok, & Scott Weaver
+ *********************************************************************/
 public class Server {
 
     Socket socket;
     ChessModel model;
-    ChessPanel panel;       // added panel to allow for board updating
+    ChessPanel panel;       // panel added to allow for board updating
     Player player;
     ServerThread thread;
 
@@ -44,22 +49,15 @@ public class Server {
     }
 
     public void close(){
-        //thread.close();
         try{
             thread.interrupt();
             socket.close();
-            //thread.close();
             System.exit(0);
         }catch (Exception e){
             System.err.println(e);
             System.err.println("unable to close");
         }
     }
-
-//   public Player getPlayer(){
-//        return player;
-//   }
-
 }
 
 

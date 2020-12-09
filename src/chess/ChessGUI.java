@@ -6,6 +6,12 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.*;
 
+/**********************************************************************
+ * A class that creates the GUI. 
+ *
+ * @author Christian Thompson, James Weitzmanm, Josh Hubbard, 
+ *         Lauren Vanderklok, & Scott Weaver
+ *********************************************************************/
 public class ChessGUI {
 
     /*****************************************************************
@@ -18,8 +24,6 @@ public class ChessGUI {
 
         ChessPanel panel = new ChessPanel();
         frame.getContentPane().add(panel);
-
-
 
         frame.setResizable(true);
         frame.setPreferredSize(new Dimension(900, 637));
@@ -49,5 +53,3 @@ public class ChessGUI {
 
     }
 }
-
-//end of class

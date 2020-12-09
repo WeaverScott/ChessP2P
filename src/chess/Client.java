@@ -2,11 +2,16 @@ package chess;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.util.ArrayList;
 
+/**********************************************************************
+ * A class that interacts with the server. 
+ *
+ * @author Christian Thompson, James Weitzmanm, Josh Hubbard, 
+ *         Lauren Vanderklok, & Scott Weaver
+ *********************************************************************/
 public class Client {
 
     Socket socket;
