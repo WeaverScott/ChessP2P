@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class Client {
 
@@ -83,11 +84,14 @@ public class Client {
         }
     }
 
-    public void sendPiece(String location){
+    public void sendPiece(ArrayList <String> board){
         try {
             DataOutputStream outToServer = new DataOutputStream(socket.getOutputStream());
             outToServer.writeUTF("loading");
-            outToServer.writeUTF(location);
+            for (String tile: board) {
+                outToServer.writeUTF(tile);
+            }
+            //.writeUTF(location);
             outToServer.writeUTF("eof"); //lets server know message is over
         } catch (IOException e){
             System.err.println("Could not get output stream");

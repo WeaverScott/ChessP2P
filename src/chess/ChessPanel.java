@@ -447,7 +447,13 @@ public class ChessPanel extends JPanel {
 
     public void saveGame(){model.saveGame();}
 
-    public void loadGame(){ model.loadBoard();}
+    public void loadGame(){
+        try{
+            client.sendPiece(model.loadBoard());
+        }catch (Exception e){
+            System.err.println(e);
+        }
+    }
 
 
 

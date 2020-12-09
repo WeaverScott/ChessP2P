@@ -2,10 +2,8 @@ package chess;
 
 import javax.swing.JOptionPane;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
+import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 /**********************************************************************
@@ -392,21 +390,24 @@ public class ChessModel implements IChessModel {
     }
 
 
-    public ArrayList<String> loadBoard() {
+    public ArrayList<String> loadBoard() throws IOException {
         BufferedReader reader;
         String piece;
-        ArrayList<String> listOfPieces;
-        try {
+        ArrayList<String> listOfPieces = new ArrayList<String>();
+
             reader = new BufferedReader(new FileReader("SavedGame.txt"));
             String line = reader.readLine();
             StringTokenizer tokens = new StringTokenizer(line);
             while (tokens.hasMoreTokens()) {
-                listOfPieces.add(tokens);
+                listOfPieces.add(tokens.nextToken(" "));
             }
-        }
-        catch (Exception e) {
-            System.err.println(e);
-        }
+            return listOfPieces;
+
+    }
+
+    public void setLoadedBoard(ArrayList <String> board){
+        System.out.println(board);
+        //use setPiece method to fill board according to data
     }
 
 

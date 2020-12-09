@@ -3,6 +3,7 @@ package chess;
 import java.io.*;
 import java.net.Socket;
 import java.net.SocketException;
+import java.util.ArrayList;
 
 public class ServerThread extends Thread{
 
@@ -28,6 +29,9 @@ public class ServerThread extends Thread{
                 int toCol = 0;
                 String promotion = null;
                 boolean undo = false;
+                ArrayList<String> board = new ArrayList<String>();
+                boolean nextCommandIsLoading = false;
+               // boolean loadingBoard = false;
                 while(true){
 
                     String command = inFromClient.readUTF();
@@ -36,12 +40,16 @@ public class ServerThread extends Thread{
 
                     if (command.equals("eof")){
                         break;
-                    }
-
-                    if (command.equals("undo")) {
+                    }else if (nextCommandIsLoading){
+                        board.add(command);
+                        //nextCommandIsLoading = false;
+                    }else if (command.equals("undo")) {
                         undo = true;
+                    }
+                    else if (command.equals("loading")){
+                        nextCommandIsLoading = true;
                     } else {
-                        undo = false;
+                     //   undo = false;
                         if (Character.isDigit(command.charAt(0))){
                             fromRow = Character.getNumericValue(command.charAt(0));
                             fromCol = Character.getNumericValue(command.charAt(1));
@@ -57,23 +65,27 @@ public class ServerThread extends Thread{
                 }
 
                 if (!undo) {
-                    Move newMove = new Move(fromRow, fromCol, toRow, toCol);    // move from other client
+                    if (nextCommandIsLoading){
+                        model.setLoadedBoard(board);
+                    }else {
+                        Move newMove = new Move(fromRow, fromCol, toRow, toCol);    // move from other client
 
-                    // make move happen on this client
-                    panel.saveThisState();
-                    model.move(newMove);
-                    model.setLastMove(newMove);
-                    model.rookCastling(newMove);
+                        // make move happen on this client
+                        panel.saveThisState();
+                        model.move(newMove);
+                        model.setLastMove(newMove);
+                        model.rookCastling(newMove);
 
 
-                    if (promotion != null){
-                        model.pawnPromoted(newMove, promotion);
-                    } else {
-                        model.pawnPromoted(newMove);
+                        if (promotion != null) {
+                            model.pawnPromoted(newMove, promotion);
+                        } else {
+                            model.pawnPromoted(newMove);
+                        }
+                        //model.pawnPromoted(newMove);
+                        model.setNextPlayer();      // change current player to next
+                        System.out.println(model.currentPlayer());
                     }
-                    //model.pawnPromoted(newMove);
-                    model.setNextPlayer();      // change current player to next
-                    System.out.println(model.currentPlayer());
                 } else {
                     panel.undoStuff();
                     System.out.println(model.currentPlayer());
