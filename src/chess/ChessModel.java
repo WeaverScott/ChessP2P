@@ -348,14 +348,16 @@ public class ChessModel implements IChessModel {
 
             String buffer = "";
 
-            char team = 'w';
-
+            char team;
 
             for (int x = 0; x < numRows(); x++) {
                 for (int y = 0; y < numColumns(); y++) {
                     if (pieceAt(x, y) != null) {
                         if (pieceAt(x, y).player() == Player.BLACK) {
                             team = 'b';
+                        }
+                        else  {
+                            team = 'w';
                         }
                     }
                     if (pieceAt(x, y) == null) {
