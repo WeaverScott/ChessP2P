@@ -411,11 +411,11 @@ public class ChessModel implements IChessModel {
     }
 
     public void setLoadedBoard(ArrayList <String> loadedBoard){
-        for (i = 0; i < loadedBoard.size(); i++) {
-            int x = Character.getNumericValue(loadedBoard[i].charAt(1));
-            int y = Character.getNumericValue(loadedBoard[i].charAt(2));
-            char team = loadedBoard[i].charAt(3);
-            if (loadedBoard[i].charAt(0) == 'p') {
+        for (int i = 0; i < loadedBoard.size(); i++) {
+            int x = Character.getNumericValue(loadedBoard.get(i).charAt(1));
+            int y = Character.getNumericValue(loadedBoard.get(i).charAt(2));
+            char team = loadedBoard.get(i).charAt(3);
+            if (loadedBoard.get(i).charAt(0) == 'p') {
                 if (team == 'b') {
                     setPiece(x, y, new Pawn(Player.BLACK));
                 }
@@ -423,7 +423,7 @@ public class ChessModel implements IChessModel {
                     setPiece(x, y, new Pawn(Player.WHITE));
                 }
             }
-            if (loadedBoard[i].charAt(0) == 'r') {
+            if (loadedBoard.get(i).charAt(0) == 'r') {
                 if (team == 'b') {
                     setPiece(x, y, new Rook(Player.BLACK));
                 }
@@ -431,7 +431,7 @@ public class ChessModel implements IChessModel {
                     setPiece(x, y, new Rook(Player.WHITE));
                 }
             }
-            if (loadedBoard[i].charAt(0) == 'n') {
+            if (loadedBoard.get(i).charAt(0) == 'n') {
                 if (team == 'b') {
                     setPiece(x, y, new Knight(Player.BLACK));
                 }
@@ -439,7 +439,7 @@ public class ChessModel implements IChessModel {
                     setPiece(x, y, new Knight(Player.WHITE));
                 }
             }
-            if (loadedBoard[i].charAt(0) == 'b') {
+            if (loadedBoard.get(i).charAt(0) == 'b') {
                 if (team == 'b') {
                     setPiece(x, y, new Bishop(Player.BLACK));
                 }
@@ -447,7 +447,7 @@ public class ChessModel implements IChessModel {
                     setPiece(x, y, new Bishop(Player.WHITE));
                 }
             }
-            if (loadedBoard[i].charAt(0) == 'q') {
+            if (loadedBoard.get(i).charAt(0) == 'q') {
                 if (team == 'b') {
                     setPiece(x, y, new Queen(Player.BLACK));
                 }
@@ -455,7 +455,7 @@ public class ChessModel implements IChessModel {
                     setPiece(x, y, new Queen(Player.WHITE));
                 }
             }
-            if (loadedBoard[i].charAt(0) == 'k') {
+            if (loadedBoard.get(i).charAt(0) == 'k') {
                 if (team == 'b') {
                     setPiece(x, y, new King(Player.BLACK));
                 }
