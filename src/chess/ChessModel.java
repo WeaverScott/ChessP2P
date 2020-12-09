@@ -78,9 +78,6 @@ public class ChessModel implements IChessModel {
 
     }
 
-    // public ChessModel(Player color, String test) {
-    //     player = color;
-    // }
 
 
     public void removeFromBoard(int row, int col){
@@ -351,15 +348,14 @@ public class ChessModel implements IChessModel {
 
             String buffer = "";
 
-            char team = 's';
+            char team = 'w';
 
             for (int x = 0; x < numRows(); x++) {
                 for (int y = 0; y < numColumns(); y++) {
                     if (pieceAt(x, y) != null) {
-                        if (pieceAt(x, y).player() == Player.BLACK) {
+                        if (pieceAt(x, y).player().equals(Player.BLACK)) {
                             team = 'b';
-                        }
-                        else  {
+                        } else  {
                             team = 'w';
                         }
                     }
@@ -469,6 +465,9 @@ public class ChessModel implements IChessModel {
                 else {
                     setPiece(x, y, new King(Player.WHITE));
                 }
+            }
+            if (loadedBoard.get(i).charAt(0) == '0') {
+                setPiece(x, y, null);
             }
         }
     }
