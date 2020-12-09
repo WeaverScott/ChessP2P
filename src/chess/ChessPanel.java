@@ -449,7 +449,7 @@ public class ChessPanel extends JPanel {
 
     public void loadGame(){
         try{
-            model.loadBoard();
+            model.setLoadedBoard(model.loadBoard());
             client.sendPiece(model.loadBoard());
         }catch (Exception e){
             System.err.println(e);
