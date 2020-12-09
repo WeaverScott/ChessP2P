@@ -348,34 +348,39 @@ public class ChessModel implements IChessModel {
 
             String buffer = "";
 
+            char team = 'w';
+
 
             for (int x = 0; x < numRows(); x++) {
                 for (int y = 0; y < numColumns(); y++) {
+                    if (pieceAt(x, y).player() == Player.BLACK) {
+                        team = 'b';
+                    }
                     if (pieceAt(x, y) == null) {
-                        buffer = buffer.concat("0" + x + y);
+                        buffer = buffer.concat("0" + x + y + team);
                         buffer = buffer.concat(" ");
                     } else if (pieceAt(x, y).type().equals("Pawn")) {
-                        buffer = buffer.concat("p" + x + y);
+                        buffer = buffer.concat("p" + x + y + team);
                         buffer = buffer.concat(" ");
 
                     } else if (pieceAt(x, y).type().equals("Rook")) {
-                        buffer = buffer.concat("r" + x + y);
+                        buffer = buffer.concat("r" + x + y + team);
                         buffer = buffer.concat(" ");
 
                     } else if (pieceAt(x, y).type().equals("Knight")) {
-                        buffer = buffer.concat("n" + x + y);
+                        buffer = buffer.concat("n" + x + y + team);
                         buffer = buffer.concat(" ");
 
                     } else if (pieceAt(x, y).type().equals("Bishop")) {
-                        buffer = buffer.concat("b" + x + y);
+                        buffer = buffer.concat("b" + x + y + team);
                         buffer = buffer.concat(" ");
 
                     } else if (pieceAt(x, y).type().equals("Queen")) {
-                        buffer = buffer.concat("q" + x + y);
+                        buffer = buffer.concat("q" + x + y + team);
                         buffer = buffer.concat(" ");
 
                     } else if (pieceAt(x, y).type().equals("King")) {
-                        buffer = buffer.concat("k" + x + y);
+                        buffer = buffer.concat("k" + x + y + team);
                         buffer = buffer.concat(" ");
 
                     }
@@ -406,8 +411,59 @@ public class ChessModel implements IChessModel {
     }
 
     public void setLoadedBoard(ArrayList <String> board){
-        System.out.println(board);
-        //use setPiece method to fill board according to data
+        for (i = 0; i < board.size(); i++) {
+            int x = Character.getNumericValue(board[i].charAt(1));
+            int y = Character.getNumericValue(board[i].charAt(2));
+            char team = board[i].charAt(3);
+            if (board[i].charAt(0) == 'p') {
+                if (team == 'b') {
+                    setPiece(x, y, new Pawn(Player.BLACK));
+                }
+                else {
+                    setPiece(x, y, new Pawn(Player.WHITE));
+                }
+            }
+            if (board[i].charAt(0) == 'r') {
+                if (team == 'b') {
+                    setPiece(x, y, new Rook(Player.BLACK));
+                }
+                else {
+                    setPiece(x, y, new Rook(Player.WHITE));
+                }
+            }
+            if (board[i].charAt(0) == 'n') {
+                if (team == 'b') {
+                    setPiece(x, y, new Knight(Player.BLACK));
+                }
+                else {
+                    setPiece(x, y, new Knight(Player.WHITE));
+                }
+            }
+            if (board[i].charAt(0) == 'b') {
+                if (team == 'b') {
+                    setPiece(x, y, new Bishop(Player.BLACK));
+                }
+                else {
+                    setPiece(x, y, new Bishop(Player.WHITE));
+                }
+            }
+            if (board[i].charAt(0) == 'q') {
+                if (team == 'b') {
+                    setPiece(x, y, new Queen(Player.BLACK));
+                }
+                else {
+                    setPiece(x, y, new Queen(Player.WHITE));
+                }
+            }
+            if (board[i].charAt(0) == 'k') {
+                if (team == 'b') {
+                    setPiece(x, y, new King(Player.BLACK));
+                }
+                else {
+                    setPiece(x, y, new King(Player.WHITE));
+                }
+            }
+        }
     }
 
 
